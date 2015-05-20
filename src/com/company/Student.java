@@ -21,8 +21,12 @@ public class Student {
         absences = new ArrayList<Absence>();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name) throws WrongInputException{
+        if (name instanceof String){
+            this.name = name;
+        }
+        else
+            throw new WrongInputException("Please Enter Your name again!");
     }
 
     public String getName(){
