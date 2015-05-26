@@ -23,6 +23,12 @@ public class MainGUI extends JFrame{
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
         bTakeAbsence = new JButton("Take Absence");
+        bTakeAbsence.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bTakeAbsence_actionPerformed(e);
+            }
+        });
         buttonPane.add(bTakeAbsence);
         bStudentList = new JButton("Student List");
         buttonPane.add(bStudentList);
@@ -39,6 +45,10 @@ public class MainGUI extends JFrame{
         bExit = new JButton("Exit");
         buttonPane.add(bExit);
         contentPane.add(buttonPane, BorderLayout.CENTER);
+    }
+
+    private void bTakeAbsence_actionPerformed(ActionEvent e) {
+
     }
 
     public void bStudentList_actionPerformed(ActionEvent e){

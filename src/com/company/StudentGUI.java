@@ -5,11 +5,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,17 +19,18 @@ import javax.swing.JOptionPane;
  */
 public class StudentGUI extends JFrame{
 
-    private StudentList studentNewList;
-
 
     private JPanel contentPane;
     private JPanel detailsPane;
     private JPanel buttonPane;
+    private JPanel infoPane;
 
     private JLabel headLabel;
     private JLabel lName;
     private JLabel lTel;
     private JLabel lEmail;
+    private JLabel lYear;
+    private JLabel lUnit;
 
     private JTextField tName;
     private JTextField tTel;
@@ -37,9 +40,9 @@ public class StudentGUI extends JFrame{
     private JButton bAdd;
     private JButton bFinish;
 
-    public StudentGUI(){
+    StudentList studentList;
 
-        studentNewList = new StudentList(2015);
+    public StudentGUI(String year, String unitName){
 
         contentPane = (JPanel)this.getContentPane();
         this.setTitle("Add Student");
@@ -72,16 +75,61 @@ public class StudentGUI extends JFrame{
         });
         buttonPane.add(bAdd);
         bFinish = new JButton("Finish");
+        bFinish.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bFinish_actionPerformed(e);
+            }
+        });
         buttonPane.add(bFinish);
+
+        infoPane = new JPanel();
+        infoPane.setLayout(new FlowLayout());
+        lYear = new JLabel(year);
+        infoPane.add(lYear);
+        lUnit = new JLabel(unitName);
+        infoPane.add(lUnit);
+
+        contentPane.add(infoPane, BorderLayout.NORTH);
         contentPane.add(buttonPane, BorderLayout.SOUTH);
         contentPane.add(detailsPane, BorderLayout.CENTER);
     }
 
+    private void bFinish_actionPerformed(ActionEvent e) {
+        try{
+            FileOutputStream saveFile = new FileOutputStream("saveFile_" + this.lUnit.getText()+ ".dat");
+            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+            save.writeObject(studentList);
+            save.close();
+        }
+        catch (FileNotFoundException ex){
+            ex.printStackTrace();
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
 
-    public void bAdd_actionPerformed(ActionEvent e){
+
+    public void bAdd_actionPerformed(ActionEvent e) {
         //studentNewList = new StudentList(2015);
         Student studentNew = new Student(this.tName.getText(), Integer.parseInt(this.tTel.getText()), this.tEmail.getText());
-        studentNewList.addStudent(studentNew);
+
+        try {
+            FileInputStream saveFile = new FileInputStream("saveFile_" + this.lUnit.getText()+ ".dat");
+            ObjectInputStream save = new ObjectInputStream(saveFile);
+            studentList = (StudentList) save.readObject();
+            save.close();
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        studentList.addStudent(studentNew);
 
         this.tName.setText("");
         this.tEmail.setText("");

@@ -1,11 +1,12 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Dimos on 5/11/15.
  */
-public class StudentList {
+public class StudentList implements Serializable {
 
     private ArrayList<Student> studentList;
     private int year;

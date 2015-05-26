@@ -16,12 +16,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TakeAbsenceGUI extends JFrame{
     
-    //private boolean DEBUG = false;
-    //private StudentList studentList;
+
     private Absence absence;
     private JPanel contentPane;
     private JPanel tablePane;
     private JCheckBox[] checkBoxes;
+    //private JLabel Unit
     
     public TakeAbsenceGUI(ArrayList<String> names){
        
@@ -39,11 +39,7 @@ public class TakeAbsenceGUI extends JFrame{
         JTable table = new JTable();
         DefaultTableModel tableModel = new DefaultTableModel(rowData, col);
         table.setModel(tableModel);
-        //tableModel.setColumnIdentifiers(new String[] {"Name", "Absence"});
-        
-//        for (String str: names) {
-//            tableModel.addRow(new Object[] {str, Boolean.FALSE});
-//        }
+
         tablePane.setLayout(new BorderLayout());
         
         this.setTitle("Take Absences");

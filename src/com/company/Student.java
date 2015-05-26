@@ -1,12 +1,13 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Created by Dimos on 5/11/15.
  */
-public class Student{
+public class Student implements Serializable {
 
     private int id;
     private String name;
