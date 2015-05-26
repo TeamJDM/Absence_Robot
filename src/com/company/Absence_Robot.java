@@ -25,7 +25,7 @@ public class Absence_Robot {
         
        
         
-        Date d = new Date(2015, 6, 24);
+        /*Date d = new Date(2015, 6, 24);
         Time t = new Time(12,0,0);
         Student s = new Student("Dimos", 123456, "sdfsdfsdf");
         Student s2 = new Student("Makis", 123456, "sdfsdfsdf");
@@ -42,11 +42,16 @@ public class Absence_Robot {
         list.addStudent(s3);
         list.addStudent(s4);
         
-        System.out.println(list.getNameList());
+        System.out.println(list.getNameList());*/
         
-        JFrame f2 = new TakeAbsenceGUI(list.getNameList());
-        f2.pack();
-        f2.setVisible(true);
+        //JFrame f2 = new TakeAbsenceGUI(list.getNameList());
+        //f2.pack();
+        //f2.setVisible(true);
+
+        JFrame f3 = new MainGUI();
+        f3.pack();
+        f3.setVisible(true);
+
     }
     
 }

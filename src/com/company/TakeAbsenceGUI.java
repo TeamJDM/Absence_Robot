@@ -51,10 +51,6 @@ public class TakeAbsenceGUI extends JFrame{
         tablePane.add(table, BorderLayout.CENTER);
     }
     
-    class KeyPair{
-        String str;
-        JCheckBox chBox;
-    }
-    
+
 }
 

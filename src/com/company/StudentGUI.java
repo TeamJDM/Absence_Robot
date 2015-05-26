@@ -17,9 +17,8 @@ import javax.swing.JOptionPane;
  */
 public class StudentGUI extends JFrame{
 
-    Connection con;
-    Statement stmt;
-    ResultSet rs;
+    private StudentList studentNewList;
+
 
     private JPanel contentPane;
     private JPanel detailsPane;
@@ -40,6 +39,7 @@ public class StudentGUI extends JFrame{
 
     public StudentGUI(){
 
+        studentNewList = new StudentList(2015);
 
         contentPane = (JPanel)this.getContentPane();
         this.setTitle("Add Student");
@@ -79,6 +79,10 @@ public class StudentGUI extends JFrame{
 
 
     public void bAdd_actionPerformed(ActionEvent e){
+        //studentNewList = new StudentList(2015);
+        Student studentNew = new Student(this.tName.getText(), Integer.parseInt(this.tTel.getText()), this.tEmail.getText());
+        studentNewList.addStudent(studentNew);
+
         this.tName.setText("");
         this.tEmail.setText("");
         this.tTel.setText("");

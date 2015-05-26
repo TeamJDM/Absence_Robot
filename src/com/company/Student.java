@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Dimos on 5/11/15.
@@ -14,6 +15,7 @@ public class Student{
     private ArrayList<Absence> absences;
 
     public Student(String name, int tel, String email){
+
 
         this.name = name;
         this.tel = tel;
@@ -71,4 +73,8 @@ public class Student{
         absences.remove(absence);
     }
 
+    protected int setId(){
+        Random r = new Random( System.currentTimeMillis() );
+        return 10000 + r.nextInt(20000);
+    }
 }

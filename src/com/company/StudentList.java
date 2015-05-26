@@ -21,6 +21,12 @@ public class StudentList {
         if (studentList.contains(s))
             System.out.println("Already in the list");
         else {
+
+            s.setId();
+            for (Student stu: studentList) {
+                while (s.getId() == stu.getId())
+                    s.setId();
+            }
             studentList.add(s);
             numberOfStudents++;
         }

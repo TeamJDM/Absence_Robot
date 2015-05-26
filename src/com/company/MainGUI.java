@@ -1,5 +1,9 @@
+package com.company;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainGUI extends JFrame{
 	
@@ -22,6 +26,12 @@ public class MainGUI extends JFrame{
         buttonPane.add(bTakeAbsence);
         bStudentList = new JButton("Student List");
         buttonPane.add(bStudentList);
+        bStudentList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bStudentList_actionPerformed(e);
+            }
+        });
         bViewList = new JButton("View List");
         buttonPane.add(bViewList);
         bStudentRecord = new JButton("Student Record");
@@ -29,6 +39,13 @@ public class MainGUI extends JFrame{
         bExit = new JButton("Exit");
         buttonPane.add(bExit);
         contentPane.add(buttonPane, BorderLayout.CENTER);
+    }
+
+    public void bStudentList_actionPerformed(ActionEvent e){
+        JFrame unitGui  = new UnitGUI();
+        unitGui.pack();
+        unitGui.setVisible(true);
+
     }
 }
 
