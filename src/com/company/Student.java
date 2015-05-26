@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Dimos on 5/11/15.
  */
-public class Student {
+public class Student{
 
     private int id;
     private String name;
@@ -53,9 +53,15 @@ public class Student {
         this.email = email;
     }
 
-    /*private int setId(){
-
-    }*/
+    public int checkStudentAbsence(Unit u){
+        int unitAbsTotal = 0;
+        for (Absence a: absences) {
+            if (a.getUnit().getUnitName().equals(u.getUnitName())) {
+                unitAbsTotal++;
+            }
+        }
+        return unitAbsTotal;
+    }
 
     public void addAbsence(Absence absence){
         absences.add(absence);

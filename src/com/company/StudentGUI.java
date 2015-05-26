@@ -1,5 +1,6 @@
 package com.company;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -39,8 +40,6 @@ public class StudentGUI extends JFrame{
 
     public StudentGUI(){
 
-        initComponents();
-        DoConnect();
 
         contentPane = (JPanel)this.getContentPane();
         this.setTitle("Add Student");
@@ -78,9 +77,6 @@ public class StudentGUI extends JFrame{
         contentPane.add(detailsPane, BorderLayout.CENTER);
     }
 
-    public void DoConnect( ) {
-
-    }
 
     public void bAdd_actionPerformed(ActionEvent e){
         this.tName.setText("");

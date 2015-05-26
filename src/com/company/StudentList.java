@@ -11,10 +11,10 @@ public class StudentList {
     private int year;
     private int numberOfStudents;
 
-    public StudentList(int year, int numberOfStudents){
+    public StudentList(int year){
         studentList = new ArrayList<Student>();
         this.year = year;
-        this.numberOfStudents = numberOfStudents;
+        this.numberOfStudents = 0;
     }
 
     public void addStudent(Student s){
@@ -45,10 +45,12 @@ public class StudentList {
         return numberOfStudents;
     }
 
-    public String getFullList(){
+    public ArrayList<String> getNameList(){
+        ArrayList<String> names = new ArrayList();
         for (Student student : studentList){
-            return student.getName();
+            names.add(student.getName());
+            
         }
-        return "No Students";
+        return names;
     }
 }
