@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class MainGUI extends JFrame{
 	
-	private JPanel contentPane;
+    private JPanel contentPane;
     private JPanel buttonPane;
     
     private JButton bTakeAbsence;
