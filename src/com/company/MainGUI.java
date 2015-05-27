@@ -48,7 +48,9 @@ public class MainGUI extends JFrame{
     }
 
     private void bTakeAbsence_actionPerformed(ActionEvent e) {
-
+        JFrame takeAbsenceFrame = new TakeAbsenceGUI();
+        takeAbsenceFrame.pack();
+        takeAbsenceFrame.setVisible(true);
     }
 
     public void bStudentList_actionPerformed(ActionEvent e){

@@ -1,5 +1,6 @@
 package com.company;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -22,12 +23,6 @@ public class StudentList implements Serializable {
         if (studentList.contains(s))
             System.out.println("Already in the list");
         else {
-
-            s.setId();
-            for (Student stu: studentList) {
-                while (s.getId() == stu.getId())
-                    s.setId();
-            }
             studentList.add(s);
             numberOfStudents++;
         }
@@ -52,12 +47,30 @@ public class StudentList implements Serializable {
         return numberOfStudents;
     }
 
-    public ArrayList<String> getNameList(){
-        ArrayList<String> names = new ArrayList();
+    public ArrayList<String[]> getNameList(){
+        String[] pair = new String[2];
+        ArrayList<String[]> names = new ArrayList<String[]>();
+
         for (Student student : studentList){
-            names.add(student.getName());
+            pair[0] = String.valueOf(student.getId());
+            pair[1] = student.getName();
+
+            names.add(pair);
             
         }
         return names;
+    }
+
+    public Student getStudentById(int id) throws NoStudentException{
+        for (Student s: studentList){
+            if (s.getId() == id){
+                return s;
+            }
+        }
+        throw new NoStudentException("No student found with this ID");
+    }
+
+    public ArrayList<Student> getArrayOfStudents(){
+        return studentList;
     }
 }

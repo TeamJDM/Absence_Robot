@@ -39,11 +39,13 @@ public class StudentGUI extends JFrame{
     private JButton bCancel;
     private JButton bAdd;
     private JButton bFinish;
+    private JButton jLoad;
 
-    StudentList studentList;
+    private StudentList studentList;
 
-    public StudentGUI(String year, String unitName){
+    public StudentGUI(int year, String unitName){
 
+        studentList = new StudentList(year);
         contentPane = (JPanel)this.getContentPane();
         this.setTitle("Add Student");
 
@@ -82,10 +84,18 @@ public class StudentGUI extends JFrame{
             }
         });
         buttonPane.add(bFinish);
+        jLoad = new JButton("Load");
+        jLoad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bLoad_actionPerformed(e);
+            }
+        });
+        buttonPane.add(jLoad);
 
         infoPane = new JPanel();
         infoPane.setLayout(new FlowLayout());
-        lYear = new JLabel(year);
+        lYear = new JLabel(String.valueOf(year));
         infoPane.add(lYear);
         lUnit = new JLabel(unitName);
         infoPane.add(lUnit);
@@ -93,13 +103,24 @@ public class StudentGUI extends JFrame{
         contentPane.add(infoPane, BorderLayout.NORTH);
         contentPane.add(buttonPane, BorderLayout.SOUTH);
         contentPane.add(detailsPane, BorderLayout.CENTER);
+
+
+    }
+
+    private void bLoad_actionPerformed(ActionEvent e) {
+
     }
 
     private void bFinish_actionPerformed(ActionEvent e) {
+
+//        for (Student s: studentList.getArrayOfStudents()){
+//            studentList.addStudent(s);
+//        }
+
         try{
             FileOutputStream saveFile = new FileOutputStream("saveFile_" + this.lUnit.getText()+ ".dat");
             ObjectOutputStream save = new ObjectOutputStream(saveFile);
-            save.writeObject(studentList);
+            save.writeObject(this.studentList);
             save.close();
         }
         catch (FileNotFoundException ex){
@@ -112,28 +133,28 @@ public class StudentGUI extends JFrame{
 
 
     public void bAdd_actionPerformed(ActionEvent e) {
-        //studentNewList = new StudentList(2015);
-        Student studentNew = new Student(this.tName.getText(), Integer.parseInt(this.tTel.getText()), this.tEmail.getText());
 
-        try {
-            FileInputStream saveFile = new FileInputStream("saveFile_" + this.lUnit.getText()+ ".dat");
-            ObjectInputStream save = new ObjectInputStream(saveFile);
-            studentList = (StudentList) save.readObject();
-            save.close();
+        this.studentList.addStudent(new Student(this.tName.getText(), Integer.parseInt(this.tTel.getText()), this.tEmail.getText()));
 
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
-        studentList.addStudent(studentNew);
-
+//        try {
+//            FileInputStream saveFile = new FileInputStream("saveFile_" + this.lUnit.getText()+ ".dat");
+//            ObjectInputStream save = new ObjectInputStream(saveFile);
+//            studentList = (StudentList) save.readObject();
+//            save.close();
+//
+//        } catch (FileNotFoundException ex) {
+//            ex.printStackTrace();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        } catch (ClassNotFoundException ex) {
+//            ex.printStackTrace();
+//        }
         this.tName.setText("");
-        this.tEmail.setText("");
         this.tTel.setText("");
-        this.setVisible(true);
+        this.tEmail.setText("");
+//        this.invalidate();
+//        this.revalidate();
+//        this.repaint();
+
     }
 }

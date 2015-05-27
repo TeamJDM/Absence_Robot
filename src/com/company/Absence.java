@@ -1,46 +1,47 @@
 package com.company;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
 /**
  * Created by Dimos on 5/13/15.
  */
-public class Absence {
+public class Absence implements Serializable{
 
-    private Date date;
-    private Time time;
-    private Unit unit;
+    private String date;
+    //private Time time;
+    private String unit;
 
-    public Absence(Student student, Date date, Time time, Unit unit){
+    public Absence(String date, String unit){
 
         this.date = date;
-        this.time = time;
+        //this.time = time;
         this.unit = unit;
     }
 
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public Time getTime() {
-        return time;
-    }
+//    public Time getTime() {
+//        return time;
+//    }
 
-    public void setTime(Time time) {
-        this.time = time;
-    }
+//    public void setTime(Time time) {
+//        this.time = time;
+//    }
 
-    public Unit getUnit() {
+    public String getUnit() {
         return unit;
     }
 
-    public void setUnit(Unit unit) {
+    public void setUnit(String unit) {
         this.unit = unit;
     }
 

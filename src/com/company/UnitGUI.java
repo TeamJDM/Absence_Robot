@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.jar.JarFile;
 
 /**
@@ -58,20 +59,21 @@ public class UnitGUI extends JFrame{
     }
 
     private void bOk_actionPerformed(ActionEvent e) {
-        StudentList studentList = new StudentList(Integer.parseInt(this.tfYear.getText()));
-        try{
-            FileOutputStream saveFile = new FileOutputStream("saveFile_" + this.jComboBox.getSelectedItem().toString() + ".dat");
-            ObjectOutputStream save = new ObjectOutputStream(saveFile);
-            save.writeObject(studentList);
-            save.close();
-        }
-        catch (FileNotFoundException ex){
-            ex.printStackTrace();
-        }
-        catch (IOException ex){
-            ex.printStackTrace();
-        }
-        JFrame studentFrame = new StudentGUI(this.tfYear.getText(), this.jComboBox.getSelectedItem().toString());
+//        StudentList studentList = new StudentList(Integer.parseInt(this.tfYear.getText()));
+//        try{
+//            FileOutputStream saveFile = new FileOutputStream("saveFile_" + this.jComboBox.getSelectedItem().toString() + ".dat");
+//            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+//            save.writeObject(studentList);
+//            save.close();
+//        }
+//        catch (FileNotFoundException ex){
+//            ex.printStackTrace();
+//        }
+//        catch (IOException ex){
+//            ex.printStackTrace();
+//        }
+        //StudentList list = new StudentList(Integer.parseInt(this.tfYear.getText()));
+        JFrame studentFrame = new StudentGUI(Integer.parseInt(this.tfYear.getText()), this.jComboBox.getSelectedItem().toString());
         studentFrame.pack();
         studentFrame.setVisible(true);
     }

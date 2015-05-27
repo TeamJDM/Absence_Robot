@@ -1,5 +1,7 @@
 package com.company;
 
+import com.sun.org.apache.bcel.internal.generic.I2F;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,7 +23,9 @@ public class Student implements Serializable {
         this.name = name;
         this.tel = tel;
         this.email = email;
+        this.id = setId();
         absences = new ArrayList<Absence>();
+
     }
 
     public void setName(String name) throws WrongInputException{
@@ -56,15 +60,15 @@ public class Student implements Serializable {
         this.email = email;
     }
 
-    public int checkStudentAbsence(Unit u){
-        int unitAbsTotal = 0;
-        for (Absence a: absences) {
-            if (a.getUnit().getUnitName().equals(u.getUnitName())) {
-                unitAbsTotal++;
-            }
-        }
-        return unitAbsTotal;
-    }
+//    public int checkStudentAbsence(Unit u){
+//        int unitAbsTotal = 0;
+//        for (Absence a: absences) {
+//            if (a.getUnit().getUnitName().equals(u.getUnitName())) {
+//                unitAbsTotal++;
+//            }
+//        }
+//        return unitAbsTotal;
+//    }
 
     public void addAbsence(Absence absence){
         absences.add(absence);
@@ -78,4 +82,16 @@ public class Student implements Serializable {
         Random r = new Random( System.currentTimeMillis() );
         return 10000 + r.nextInt(20000);
     }
+
+    public int checkAbsenceLimit( String unit){
+        int absenceNumber = 0;
+        for (Absence ab: absences){
+            if (ab.getUnit().equals(unit)){
+                absenceNumber++;
+            }
+        }
+        return absenceNumber;
+    }
+
+
 }
