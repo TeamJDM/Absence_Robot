@@ -40,7 +40,7 @@ public class PreviewGUI extends JFrame{
         this.setTitle("Preview");
 
         infoPanel = new JPanel();
-        infoPanel.setLayout(new GridLayout(studentList.getArrayOfStudents().size(), 4));
+        infoPanel.setLayout(new GridLayout(studentList.getArrayOfStudents().size(), 3));
         for (Student s: studentList.getArrayOfStudents()){
             infoPanel.add(new JLabel(String.valueOf(s.getId())));
             infoPanel.add(new JLabel(s.getName()));

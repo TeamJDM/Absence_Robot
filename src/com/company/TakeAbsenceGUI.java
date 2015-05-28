@@ -85,17 +85,6 @@ public class TakeAbsenceGUI extends JFrame{
 
     private void bSubmit_actionPerformed(ActionEvent e) {
 
-//        for (Component comp:  this.getComponents()){
-//            if (comp instanceof JCheckBox)
-//                checkBoxes.add((JCheckBox) comp);
-//        }
-//
-//        for (JCheckBox jChBox: checkBoxes){
-//            if (jChBox.isSelected()){
-//                jChBox
-//            }
-//        }
-
         for (JCheckBox jChB: checkBoxes){
             if (jChB.isSelected()){
                 try {
@@ -140,7 +129,7 @@ public class TakeAbsenceGUI extends JFrame{
         try {
             FileInputStream saveFile = new FileInputStream("saveFile_" + this.unitsBox.getSelectedItem().toString()+ ".dat");
             ObjectInputStream save = new ObjectInputStream(saveFile);
-            studentList = (StudentList) save.readObject();
+            this.studentList = (StudentList) save.readObject();
             save.close();
 
         } catch (FileNotFoundException ex) {
