@@ -7,17 +7,23 @@ import java.awt.event.ActionListener;
 
 public class MainGUI extends JFrame{
 	
-    private JPanel contentPane;
+    protected JPanel contentPaneAll;
+    private JPanel mainGuiPane;
     private JPanel buttonPane;
+    //private StudentGUI studentAddPanel;
+    //private JPanel unitPanel;
     
     private JButton bTakeAbsence;
     private JButton bStudentList;
     private JButton bViewList;
     private JButton bStudentRecord;
     private JButton bExit;
+
+
     
     public MainGUI(){
-    	contentPane = (JPanel)this.getContentPane();
+        //unitPanel = new UnitGUI();
+    	contentPaneAll = (JPanel)this.getContentPane();
         this.setTitle("MainWindow");
         
         buttonPane = new JPanel();
@@ -44,7 +50,9 @@ public class MainGUI extends JFrame{
         buttonPane.add(bStudentRecord);
         bExit = new JButton("Exit");
         buttonPane.add(bExit);
-        contentPane.add(buttonPane, BorderLayout.CENTER);
+        mainGuiPane = new JPanel();
+        mainGuiPane.add(buttonPane, BorderLayout.CENTER);
+        contentPaneAll.add(mainGuiPane);
     }
 
     private void bTakeAbsence_actionPerformed(ActionEvent e) {
@@ -54,7 +62,7 @@ public class MainGUI extends JFrame{
     }
 
     public void bStudentList_actionPerformed(ActionEvent e){
-        JFrame unitGui  = new UnitGUI();
+        JFrame unitGui = new UnitGUI();
         unitGui.pack();
         unitGui.setVisible(true);
 

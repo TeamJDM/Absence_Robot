@@ -45,9 +45,10 @@ public class StudentGUI extends JFrame{
 
     public StudentGUI(int year, String unitName){
 
-        studentList = new StudentList(year);
         contentPane = (JPanel)this.getContentPane();
-        this.setTitle("Add Student");
+        studentList = new StudentList(year);
+//        contentPane = (JPanel)this.getContentPane();
+//        this.setTitle("Add Student");
 
         detailsPane = new JPanel();
         detailsPane.setLayout(new GridLayout(3,3));
@@ -136,25 +137,10 @@ public class StudentGUI extends JFrame{
 
         this.studentList.addStudent(new Student(this.tName.getText(), Integer.parseInt(this.tTel.getText()), this.tEmail.getText()));
 
-//        try {
-//            FileInputStream saveFile = new FileInputStream("saveFile_" + this.lUnit.getText()+ ".dat");
-//            ObjectInputStream save = new ObjectInputStream(saveFile);
-//            studentList = (StudentList) save.readObject();
-//            save.close();
-//
-//        } catch (FileNotFoundException ex) {
-//            ex.printStackTrace();
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        } catch (ClassNotFoundException ex) {
-//            ex.printStackTrace();
-//        }
         this.tName.setText("");
         this.tTel.setText("");
         this.tEmail.setText("");
-//        this.invalidate();
-//        this.revalidate();
-//        this.repaint();
+
 
     }
 }

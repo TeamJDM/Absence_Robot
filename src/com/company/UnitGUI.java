@@ -17,9 +17,11 @@ import java.util.jar.JarFile;
  */
 public class UnitGUI extends JFrame{
 
+    //private JPanel contentPaneRoot;
     private JPanel contentPane;
     private JPanel detailsPane;
     private JPanel buttonPane;
+    private JPanel studentGUIPane;
 
     private JComboBox jComboBox;
     private JLabel lYear;
@@ -38,8 +40,10 @@ public class UnitGUI extends JFrame{
         tfYear = new JTextField();
         detailsPane.add(tfYear);
         jComboBox = new JComboBox();
-        jComboBox.addItem("OOP");
-        jComboBox.addItem("SAD");
+        Unit oop = new Unit("OOP", "Eleutherakis", 8);
+        jComboBox.addItem(oop.getUnitName());
+        Unit sad = new Unit("SAD", "Stamatopoulou", 6);
+        jComboBox.addItem(sad.getUnitName());
         detailsPane.add(jComboBox);
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
@@ -54,6 +58,8 @@ public class UnitGUI extends JFrame{
 
         contentPane.add(detailsPane, BorderLayout.CENTER);
         contentPane.add(buttonPane, BorderLayout.SOUTH);
+
+        //contentPaneRoot.add(contentPane);
 
 
     }
@@ -76,6 +82,7 @@ public class UnitGUI extends JFrame{
         JFrame studentFrame = new StudentGUI(Integer.parseInt(this.tfYear.getText()), this.jComboBox.getSelectedItem().toString());
         studentFrame.pack();
         studentFrame.setVisible(true);
+
     }
 
 
