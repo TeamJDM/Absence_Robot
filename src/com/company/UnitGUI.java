@@ -25,6 +25,7 @@ public class UnitGUI extends JFrame{
     private JButton bOk;
     private JButton bBack;
     private JButton bAddUnit;
+    private JButton bDeleteUnit;
 
     private UnitList units;
     private Unit selectedUnit;
@@ -97,6 +98,29 @@ public class UnitGUI extends JFrame{
             }
         });
         buttonPane.add(bAddUnit);
+        bDeleteUnit = new JButton("Delete Unit");
+        bDeleteUnit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String unitNameDelete = JOptionPane.showInputDialog("Enter the name of the Unit you want to delete: ");
+                for (Unit u: units.getUnits()){
+                    if (u.getUnitName().equals(unitNameDelete))
+                        units.deleteUnit(u);
+                }
+                try {
+                    FileOutputStream saveFile = new FileOutputStream("units.dat");
+                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
+                    save.writeObject(units);
+                    save.close();
+
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        });
         contentPane.add(detailsPane, BorderLayout.CENTER);
         contentPane.add(buttonPane, BorderLayout.SOUTH);
 

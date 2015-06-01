@@ -38,6 +38,12 @@ public class TakeAbsenceGUI extends JFrame{
     private JButton bLoad;
     private JButton bSubmit;
     private JButton bBack;
+    private JLabel lUnit;
+    private JLabel lProfessor;
+    private JLabel lYear;
+    private JLabel lShowUnit;
+    private JLabel lShowProf;
+    private JLabel lShowYear;
     private Date date;
 
     public TakeAbsenceGUI(){
@@ -70,6 +76,7 @@ public class TakeAbsenceGUI extends JFrame{
 
         infoPanel = new JPanel();
         infoPanel.setLayout(new FlowLayout());
+        lUnit = new JLabel("Year:");
         unitsBox = new JComboBox();
         for (Unit u: units.getUnits()){
             unitsBox.addItem(u.getUnitName());
