@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.company;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,12 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Dimos
- */
 public class TakeAbsenceGUI extends JFrame{
-    
 
     private Absence absence;
     private StudentList studentList;
@@ -37,6 +31,7 @@ public class TakeAbsenceGUI extends JFrame{
     private JComboBox unitsBox;
     private JButton bLoad;
     private JButton bSubmit;
+    private JButton bBack;
     private Date date;
 
     public TakeAbsenceGUI(){
@@ -47,6 +42,7 @@ public class TakeAbsenceGUI extends JFrame{
         //studentList = new StudentList(date.getYear());
 
         contentPane = (JPanel) this.getContentPane();
+        contentPane.setPreferredSize(new Dimension(300,200));
         tablePane = new JPanel();
 
         
@@ -76,6 +72,19 @@ public class TakeAbsenceGUI extends JFrame{
             }
         });
         buttonPane.add(bSubmit);
+        
+        bBack = new JButton("Back");
+        bBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	dispose();
+            	MainGUI mg = new MainGUI();
+            	mg.pack();
+            	mg.setVisible(true);
+            	
+            }
+        });
+        buttonPane.add(bBack);
 
         contentPane.add(buttonPane, BorderLayout.SOUTH);
 
@@ -121,8 +130,6 @@ public class TakeAbsenceGUI extends JFrame{
         JFrame f12 = new PreviewGUI(this.unitsBox.getSelectedItem().toString());
         f12.pack();
         f12.setVisible(true);
-
-
     }
 
     private void bLoad_actionPerformed(ActionEvent e) {
@@ -151,7 +158,7 @@ public class TakeAbsenceGUI extends JFrame{
         }
 
         contentPane.add(tablePane, BorderLayout.CENTER);
-        this.revalidate();
+        //this.revalidate();
         this.repaint();
 
 
@@ -159,4 +166,3 @@ public class TakeAbsenceGUI extends JFrame{
 
 
 }
-
