@@ -1,21 +1,19 @@
-package com.company;
-
-
 import javax.swing.*;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-/**
- * Created by Dimos on 5/27/15.
- */
 public class PreviewGUI extends JFrame{
 
     private JLabel lUnit;
     private JPanel contentPane;
     private JPanel infoPanel;
+    private JPanel buttonPanel;
     private JButton bOk;
 
     private StudentList studentList;
@@ -37,7 +35,20 @@ public class PreviewGUI extends JFrame{
         }
 
         contentPane = (JPanel) this.getContentPane();
+        contentPane.setPreferredSize(new Dimension(200,200));
         this.setTitle("Preview");
+        
+        bOk = new JButton("Ok");
+        bOk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	TakeAbsenceGUI ta = new TakeAbsenceGUI();
+            	ta.pack();
+            	ta.setVisible(true);
+            	dispose();
+            }
+        });
+        buttonPanel.add(bOk);
 
         infoPanel = new JPanel();
         infoPanel.setLayout(new GridLayout(studentList.getArrayOfStudents().size(), 3));
@@ -48,5 +59,6 @@ public class PreviewGUI extends JFrame{
         }
 
         contentPane.add(infoPanel, BorderLayout.CENTER);
+        contentPane.add(buttonPanel, BorderLayout.SOUTH);
     }
 }
