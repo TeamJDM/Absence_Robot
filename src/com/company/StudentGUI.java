@@ -1,6 +1,3 @@
-package com.company;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,9 +11,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- * Created by Dimos on 5/20/15.
- */
 public class StudentGUI extends JFrame{
 
 
@@ -36,10 +30,10 @@ public class StudentGUI extends JFrame{
     private JTextField tTel;
     private JTextField tEmail;
 
-    private JButton bCancel;
     private JButton bAdd;
     private JButton bFinish;
     private JButton jLoad;
+    private JButton bBack;
 
     private StudentList studentList;
 
@@ -47,6 +41,7 @@ public class StudentGUI extends JFrame{
 
         studentList = new StudentList(year);
         contentPane = (JPanel)this.getContentPane();
+        contentPane.setPreferredSize(new Dimension(450,200));
         this.setTitle("Add Student");
 
         detailsPane = new JPanel();
@@ -66,8 +61,7 @@ public class StudentGUI extends JFrame{
 
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
-        bCancel = new JButton("Cancel");
-        buttonPane.add(bCancel);
+        
         bAdd = new JButton("Add Student");
         bAdd.addActionListener(new ActionListener() {
             @Override
@@ -76,6 +70,7 @@ public class StudentGUI extends JFrame{
             }
         });
         buttonPane.add(bAdd);
+        
         bFinish = new JButton("Finish");
         bFinish.addActionListener(new ActionListener() {
             @Override
@@ -92,6 +87,19 @@ public class StudentGUI extends JFrame{
             }
         });
         buttonPane.add(jLoad);
+        
+        bBack = new JButton("Back");
+        bBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	dispose();
+            	UnitGUI mg = new UnitGUI();
+            	mg.pack();
+            	mg.setVisible(true);
+            	
+            }
+        });
+        buttonPane.add(bBack);
 
         infoPane = new JPanel();
         infoPane.setLayout(new FlowLayout());
