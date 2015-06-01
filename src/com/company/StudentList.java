@@ -12,10 +12,12 @@ public class StudentList implements Serializable {
     private ArrayList<Student> studentList;
     private int year;
     private int numberOfStudents;
+    private Unit unit;
 
-    public StudentList(int year){
+    public StudentList(int year, Unit unit){
         studentList = new ArrayList<Student>();
         this.year = year;
+        this.unit = unit;
         this.numberOfStudents = 0;
     }
 
@@ -33,6 +35,10 @@ public class StudentList implements Serializable {
             studentList.remove(s);
             numberOfStudents--;
         }
+    }
+
+    public Unit getUnit() {
+        return unit;
     }
 
     public int getYear() {

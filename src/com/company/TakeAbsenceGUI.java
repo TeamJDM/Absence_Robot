@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+package com.company;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +17,8 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
+
+
 
 public class TakeAbsenceGUI extends JFrame{
 
@@ -112,7 +116,7 @@ public class TakeAbsenceGUI extends JFrame{
         for (Student stud : studentList.getArrayOfStudents()) {
             if (absentStudents.contains(stud)) {
                 if (stud.checkAbsenceLimit(this.unitsBox.getSelectedItem().toString()) < 7){
-                    stud.addAbsence(new Absence(date.toString(), unitsBox.getSelectedItem().toString()));
+                    stud.addAbsence(new Absence(date.toString(), studentList.getUnit()));
 
                 }
 
@@ -137,12 +141,10 @@ public class TakeAbsenceGUI extends JFrame{
         JFrame f12 = new PreviewGUI(this.unitsBox.getSelectedItem().toString());
         f12.pack();
         f12.setVisible(true);
-<<<<<<< HEAD
 
         absentStudents.clear();
 
-=======
->>>>>>> origin/master
+
     }
 
     private void bLoad_actionPerformed(ActionEvent e) {
@@ -160,12 +162,14 @@ public class TakeAbsenceGUI extends JFrame{
             ex.printStackTrace();
         }
 
-        tablePane.setLayout(new GridLayout(studentList.getNameList().size(), 2));
+        tablePane.setLayout(new GridLayout(studentList.getNameList().size(), 4));
         int i = 0;
         for (Student s: studentList.getArrayOfStudents()){
             checkBoxes.add(new JCheckBox(String.valueOf(s.getId()), false));
             tablePane.add(checkBoxes.get(i));
             tablePane.add(new JLabel(s.getName()));
+            tablePane.add(new JLabel(String.valueOf(s.checkAbsenceLimit(studentList.getUnit().getUnitName()))));
+            tablePane.add(new JLabel(String.valueOf(studentList.getUnit().getAbsencesPermitted())));
 
             i++;
         }

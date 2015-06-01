@@ -1,3 +1,5 @@
+package com.company;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -37,7 +39,8 @@ public class PreviewGUI extends JFrame{
         contentPane = (JPanel) this.getContentPane();
         contentPane.setPreferredSize(new Dimension(200,200));
         this.setTitle("Preview");
-        
+
+        buttonPanel = new JPanel();
         bOk = new JButton("Ok");
         bOk.addActionListener(new ActionListener() {
             @Override

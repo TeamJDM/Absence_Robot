@@ -1,3 +1,5 @@
+package com.company;
+
 import javax.sql.rowset.serial.SerialArray;
 import javax.swing.*;
 
@@ -8,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.jar.JarFile;
 
@@ -25,7 +28,17 @@ public class UnitGUI extends JFrame{
     private JButton bOk;
     private JButton bBack;
 
+    private ArrayList<Unit> units;
+    private Unit selectedUnit;
+
     public UnitGUI() {
+
+        //units = new Unit[2];
+        //Unit oop = new Unit("OOP", "Eleutherakis", 8);
+        //Unit sad = new Unit("SAD", "Stamatopoulou", 6);
+        units = new ArrayList<Unit>();
+        units.add(new Unit("OOP", "Eleutherakis", 8));
+        units.add(new Unit("SAD", "Stamatopoulou", 6));
 
         contentPane = (JPanel)this.getContentPane();
         contentPane.setPreferredSize(new Dimension(200,150));
@@ -38,10 +51,13 @@ public class UnitGUI extends JFrame{
         tfYear = new JTextField();
         detailsPane.add(tfYear);
         jComboBox = new JComboBox();
-        Unit oop = new Unit("OOP", "Eleutherakis", 8);
-        jComboBox.addItem(oop.getUnitName());
-        Unit sad = new Unit("SAD", "Stamatopoulou", 6);
-        jComboBox.addItem(sad.getUnitName());
+        for (Unit uni: units){
+            jComboBox.addItem(uni.getUnitName());
+        }
+//        Unit oop = new Unit("OOP", "Eleutherakis", 8);
+//        jComboBox.addItem(oop.getUnitName());
+//        Unit sad = new Unit("SAD", "Stamatopoulou", 6);
+//        jComboBox.addItem(sad.getUnitName());
         detailsPane.add(jComboBox);
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
@@ -90,15 +106,18 @@ public class UnitGUI extends JFrame{
 //            ex.printStackTrace();
 //        }
         //StudentList list = new StudentList(Integer.parseInt(this.tfYear.getText()));
-        
-    	JFrame studentFrame = new StudentGUI(Integer.parseInt(this.tfYear.getText()), this.jComboBox.getSelectedItem().toString());
+        for (Unit u: units){
+            if (u.getUnitName().equals(jComboBox.getSelectedItem().toString()))
+                selectedUnit = u;
+        }
+    	JFrame studentFrame = new StudentGUI(Integer.parseInt(this.tfYear.getText()),selectedUnit);
         studentFrame.pack();
         studentFrame.setVisible(true);
-<<<<<<< HEAD
 
-=======
+
+
         dispose();
->>>>>>> origin/master
+
     }
 
 

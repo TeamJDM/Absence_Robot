@@ -1,3 +1,5 @@
+package com.company;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -37,17 +39,14 @@ public class StudentGUI extends JFrame{
 
     private StudentList studentList;
 
-    public StudentGUI(int year, String unitName){
+    public StudentGUI(int year, Unit unit){
 
         contentPane = (JPanel)this.getContentPane();
-<<<<<<< HEAD
-        studentList = new StudentList(year);
+        studentList = new StudentList(year, unit);
 //        contentPane = (JPanel)this.getContentPane();
 //        this.setTitle("Add Student");
-=======
         contentPane.setPreferredSize(new Dimension(450,200));
         this.setTitle("Add Student");
->>>>>>> origin/master
 
         detailsPane = new JPanel();
         detailsPane.setLayout(new GridLayout(3,3));
@@ -98,7 +97,7 @@ public class StudentGUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
             	dispose();
-            	UnitGUI mg = new UnitGUI();
+            	com.company.UnitGUI mg = new UnitGUI();
             	mg.pack();
             	mg.setVisible(true);
             	
@@ -110,7 +109,7 @@ public class StudentGUI extends JFrame{
         infoPane.setLayout(new FlowLayout());
         lYear = new JLabel(String.valueOf(year));
         infoPane.add(lYear);
-        lUnit = new JLabel(unitName);
+        lUnit = new JLabel(unit.getUnitName());
         infoPane.add(lUnit);
 
         contentPane.add(infoPane, BorderLayout.NORTH);

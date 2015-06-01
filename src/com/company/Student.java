@@ -83,7 +83,7 @@ public class Student implements Serializable {
     public int checkAbsenceLimit( String unit){
         int absenceNumber = 0;
         for (Absence ab: absences){
-            if (ab.getUnit().equals(unit)){
+            if (ab.getUnit().getUnitName().equals(unit)){
                 absenceNumber++;
             }
         }

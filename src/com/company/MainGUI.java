@@ -1,3 +1,4 @@
+package com.company;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class MainGUI extends JFrame{
 	
-    protected JPanel contentPaneAll;
+    protected JPanel contentPane;
     private JPanel mainGuiPane;
     private JPanel buttonPane;
     //private StudentGUI studentAddPanel;
@@ -21,13 +22,10 @@ public class MainGUI extends JFrame{
 
     
     public MainGUI(){
-<<<<<<< HEAD
         //unitPanel = new UnitGUI();
-    	contentPaneAll = (JPanel)this.getContentPane();
-=======
+    	//contentPaneAll = (JPanel)this.getContentPane();
     	contentPane = (JPanel)this.getContentPane();
     	contentPane.setPreferredSize(new Dimension(350,350));
->>>>>>> origin/master
         this.setTitle("MainWindow");
         
         buttonPane = new JPanel();
@@ -76,11 +74,9 @@ public class MainGUI extends JFrame{
         bExit = new JButton("Exit");
         bExit.setBackground(Color.GRAY);
         buttonPane.add(bExit);
-<<<<<<< HEAD
         mainGuiPane = new JPanel();
         mainGuiPane.add(buttonPane, BorderLayout.CENTER);
-        contentPaneAll.add(mainGuiPane);
-=======
+        contentPane.add(mainGuiPane);
         contentPane.add(buttonPane, BorderLayout.CENTER);
         bExit.addActionListener(new ActionListener() {
             @Override
@@ -88,7 +84,6 @@ public class MainGUI extends JFrame{
             	dispose();
             }
         });
->>>>>>> origin/master
     }
 
     private void bTakeAbsence_actionPerformed(ActionEvent e) {

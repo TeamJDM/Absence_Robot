@@ -1,3 +1,4 @@
+package com.company;
 import javax.swing.*;
 
 import java.awt.*;
@@ -77,7 +78,7 @@ public class StudentRecordGUI extends JFrame{
         unitGui.setVisible(true);
     }
     public void bSearch_actionPerformed(ActionEvent e){
-        JFrame unitGui  = new StudentRecord2GUI();
+        JFrame unitGui  = new StudentRecordGUI();
         unitGui.pack();
         unitGui.setVisible(true);
     }

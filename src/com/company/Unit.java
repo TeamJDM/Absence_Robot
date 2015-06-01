@@ -1,9 +1,11 @@
 package com.company;
 
+import java.io.Serializable;
+
 /**
  * Created by Dimos on 5/11/15.
  */
-public class Unit {
+public class Unit implements Serializable{
 
     private String profName;
     private String unitName;

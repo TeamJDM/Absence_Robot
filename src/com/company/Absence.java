@@ -11,9 +11,9 @@ public class Absence implements Serializable{
 
     private String date;
     //private Time time;
-    private String unit;
+    private Unit unit;
 
-    public Absence(String date, String unit){
+    public Absence(String date, Unit unit){
 
         this.date = date;
         //this.time = time;
@@ -37,11 +37,11 @@ public class Absence implements Serializable{
 //        this.time = time;
 //    }
 
-    public String getUnit() {
+    public Unit getUnit() {
         return unit;
     }
 
-    public void setUnit(String unit) {
+    public void setUnit(Unit unit) {
         this.unit = unit;
     }
 
