@@ -28,6 +28,7 @@ public class ViewListGUI extends JFrame{
     private JButton bDelete;
     private JButton bEdit;
     private JButton bBack;
+    private JButton bLoad;
 
     public ViewListGUI(){
 
@@ -77,6 +78,15 @@ public class ViewListGUI extends JFrame{
             }
         });
         buttonPane.add(bEdit);
+        
+        bLoad = new JButton("Load");
+        bLoad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bLoad_actionPerformed(e);
+            }
+        });
+        buttonPane.add(bLoad);
         
         bBack = new JButton("Back");
         bBack.addActionListener(new ActionListener() {
