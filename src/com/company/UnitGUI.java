@@ -6,10 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.jar.JarFile;
@@ -27,18 +24,28 @@ public class UnitGUI extends JFrame{
     private JTextField tfYear;
     private JButton bOk;
     private JButton bBack;
+    private JButton bAddUnit;
 
-    private ArrayList<Unit> units;
+    private UnitList units;
     private Unit selectedUnit;
 
     public UnitGUI() {
 
-        //units = new Unit[2];
-        //Unit oop = new Unit("OOP", "Eleutherakis", 8);
-        //Unit sad = new Unit("SAD", "Stamatopoulou", 6);
-        units = new ArrayList<Unit>();
-        units.add(new Unit("OOP", "Eleutherakis", 8));
-        units.add(new Unit("SAD", "Stamatopoulou", 6));
+
+        try {
+            FileInputStream saveFile = new FileInputStream("units.dat");
+            ObjectInputStream save = new ObjectInputStream(saveFile);
+            this.units = (UnitList) save.readObject();
+            save.close();
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
 
         contentPane = (JPanel)this.getContentPane();
         contentPane.setPreferredSize(new Dimension(200,150));
@@ -51,13 +58,9 @@ public class UnitGUI extends JFrame{
         tfYear = new JTextField();
         detailsPane.add(tfYear);
         jComboBox = new JComboBox();
-        for (Unit uni: units){
+        for (Unit uni: units.getUnits()){
             jComboBox.addItem(uni.getUnitName());
         }
-//        Unit oop = new Unit("OOP", "Eleutherakis", 8);
-//        jComboBox.addItem(oop.getUnitName());
-//        Unit sad = new Unit("SAD", "Stamatopoulou", 6);
-//        jComboBox.addItem(sad.getUnitName());
         detailsPane.add(jComboBox);
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
@@ -82,11 +85,32 @@ public class UnitGUI extends JFrame{
             }
         });
         buttonPane.add(bBack);
+        bAddUnit = new JButton("Add Unit");
+        bAddUnit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                JFrame addFrame = new AddUnitGui();
+                addFrame.pack();
+                addFrame.setVisible(true);
 
+            }
+        });
+        buttonPane.add(bAddUnit);
         contentPane.add(detailsPane, BorderLayout.CENTER);
         contentPane.add(buttonPane, BorderLayout.SOUTH);
 
-        //contentPaneRoot.add(contentPane);
+        try {
+            FileOutputStream saveFile = new FileOutputStream("units.dat");
+            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+            save.writeObject(units);
+            save.close();
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
 
     }
@@ -106,7 +130,7 @@ public class UnitGUI extends JFrame{
 //            ex.printStackTrace();
 //        }
         //StudentList list = new StudentList(Integer.parseInt(this.tfYear.getText()));
-        for (Unit u: units){
+        for (Unit u: units.getUnits()){
             if (u.getUnitName().equals(jComboBox.getSelectedItem().toString()))
                 selectedUnit = u;
         }

@@ -45,9 +45,9 @@ public class PreviewGUI extends JFrame{
         bOk.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	TakeAbsenceGUI ta = new TakeAbsenceGUI();
-            	ta.pack();
-            	ta.setVisible(true);
+            	//TakeAbsenceGUI ta = new TakeAbsenceGUI();
+            	//ta.pack();
+            	//ta.setVisible(true);
             	dispose();
             }
         });

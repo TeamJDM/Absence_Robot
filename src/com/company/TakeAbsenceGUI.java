@@ -22,9 +22,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class TakeAbsenceGUI extends JFrame{
 
-    private Absence absence;
     private StudentList studentList;
     private ArrayList<Student> absentStudents;
+    private UnitList units;
 
     //private DefaultTableModel tableModel;
 
@@ -46,6 +46,20 @@ public class TakeAbsenceGUI extends JFrame{
         date = new Date();
         absentStudents = new ArrayList<Student>();
         //studentList = new StudentList(date.getYear());
+        try {
+            FileInputStream saveFile = new FileInputStream("units.dat");
+            ObjectInputStream save = new ObjectInputStream(saveFile);
+            this.units = (UnitList) save.readObject();
+            save.close();
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
 
         contentPane = (JPanel) this.getContentPane();
         contentPane.setPreferredSize(new Dimension(300,200));
@@ -57,8 +71,9 @@ public class TakeAbsenceGUI extends JFrame{
         infoPanel = new JPanel();
         infoPanel.setLayout(new FlowLayout());
         unitsBox = new JComboBox();
-        unitsBox.addItem("OOP");
-        unitsBox.addItem("SAD");
+        for (Unit u: units.getUnits()){
+            unitsBox.addItem(u.getUnitName());
+        }
         infoPanel.add(unitsBox);
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
@@ -175,8 +190,8 @@ public class TakeAbsenceGUI extends JFrame{
         }
 
         contentPane.add(tablePane, BorderLayout.CENTER);
-        this.revalidate();
-        this.repaint();
+        tablePane.revalidate();
+        tablePane.repaint();
 
 
     }
