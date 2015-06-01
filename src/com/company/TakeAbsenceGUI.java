@@ -158,7 +158,7 @@ public class TakeAbsenceGUI extends JFrame{
         }
 
         contentPane.add(tablePane, BorderLayout.CENTER);
-        //this.revalidate();
+        this.revalidate();
         this.repaint();
 
 
