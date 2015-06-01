@@ -1,7 +1,6 @@
-package com.company;
-
 import javax.sql.rowset.serial.SerialArray;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,9 +11,6 @@ import java.io.ObjectOutputStream;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.jar.JarFile;
 
-/**
- * Created by Dimos on 5/26/15.
- */
 public class UnitGUI extends JFrame{
 
     //private JPanel contentPaneRoot;
@@ -27,10 +23,12 @@ public class UnitGUI extends JFrame{
     private JLabel lYear;
     private JTextField tfYear;
     private JButton bOk;
+    private JButton bBack;
 
     public UnitGUI() {
 
         contentPane = (JPanel)this.getContentPane();
+        contentPane.setPreferredSize(new Dimension(200,150));
         this.setTitle("Choose Unit to create a Student List");
 
         detailsPane = new JPanel();
@@ -55,6 +53,19 @@ public class UnitGUI extends JFrame{
             }
         });
         buttonPane.add(bOk);
+        
+        bBack = new JButton("Back");
+        bBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	dispose();
+            	MainGUI mg = new MainGUI();
+            	mg.pack();
+            	mg.setVisible(true);
+            	
+            }
+        });
+        buttonPane.add(bBack);
 
         contentPane.add(detailsPane, BorderLayout.CENTER);
         contentPane.add(buttonPane, BorderLayout.SOUTH);
@@ -79,10 +90,15 @@ public class UnitGUI extends JFrame{
 //            ex.printStackTrace();
 //        }
         //StudentList list = new StudentList(Integer.parseInt(this.tfYear.getText()));
-        JFrame studentFrame = new StudentGUI(Integer.parseInt(this.tfYear.getText()), this.jComboBox.getSelectedItem().toString());
+        
+    	JFrame studentFrame = new StudentGUI(Integer.parseInt(this.tfYear.getText()), this.jComboBox.getSelectedItem().toString());
         studentFrame.pack();
         studentFrame.setVisible(true);
+<<<<<<< HEAD
 
+=======
+        dispose();
+>>>>>>> origin/master
     }
 
 

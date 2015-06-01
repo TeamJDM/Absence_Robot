@@ -6,9 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by Dimos on 5/11/15.
- */
 public class Student implements Serializable {
 
     private int id;
@@ -92,6 +89,4 @@ public class Student implements Serializable {
         }
         return absenceNumber;
     }
-
-
 }
