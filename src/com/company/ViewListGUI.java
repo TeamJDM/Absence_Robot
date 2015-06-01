@@ -8,6 +8,7 @@ import java.io.*;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 public class ViewListGUI extends JFrame{
@@ -15,9 +16,10 @@ public class ViewListGUI extends JFrame{
 
     //private Absence absence;
     private StudentList studentList;
+    private UnitList unitList;
     //private ArrayList<Student> absentStudents;
 
-    //private DefaultTableModel tableModel;
+    private ArrayList<JCheckBox> checkBoxes;
 
     private JPanel contentPane;
     private JPanel tablePane;
@@ -32,55 +34,176 @@ public class ViewListGUI extends JFrame{
     private JButton bBack;
     private JButton bLoad;
 
-    public ViewListGUI(){
+    private Unit selectedUnit;
 
-       // absentStudents = new ArrayList<Student>();
-        //studentList = new StudentList(date.getYear());
+    public ViewListGUI() {
+
+        checkBoxes = new ArrayList<JCheckBox>();
+
+        try {
+            FileInputStream saveFile = new FileInputStream("units.dat");
+            ObjectInputStream save = new ObjectInputStream(saveFile);
+            this.unitList = (UnitList) save.readObject();
+            save.close();
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
 
         contentPane = (JPanel) this.getContentPane();
-        contentPane.setPreferredSize(new Dimension(300,200));
+        contentPane.setPreferredSize(new Dimension(300, 200));
         tablePane = new JPanel();
         this.setTitle("View List");
 
         infoPanel = new JPanel();
         infoPanel.setLayout(new FlowLayout());
         unitsBox = new JComboBox();
-        unitsBox.addItem("OOP");
-        unitsBox.addItem("SAD");
-        unitsBox.addItem("MATH");
-        unitsBox.addItem("NETW");
-        unitsBox.addItem("IS");
+        for (Unit u : unitList.getUnits()) {
+            unitsBox.addItem(u.getUnitName());
+        }
         infoPanel.add(unitsBox);
-        
+
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
         bAdd = new JButton("Add");
         bAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //bAdd_actionPerformed(e);
+
+                JPanel inputDialog = new JPanel();
+                JPanel info = new JPanel();
+                JPanel buttons = new JPanel();
+                JLabel lName = new JLabel("Name");
+                JTextField tName = new JTextField();
+                JLabel lTel = new JLabel("Telephone Namber");
+                JTextField tTel = new JTextField();
+                JLabel lEmail = new JLabel("Email");
+                JTextField tEmail = new JTextField();
+                info.setLayout(new GridLayout(3,3));
+                info.add(lName);
+                info.add(tName);
+                info.add(lTel);
+                info.add(tTel);
+                info.add(lEmail);
+                info.add(tEmail);
+                inputDialog.add(info, BorderLayout.CENTER);
+
+                int result = JOptionPane.showConfirmDialog(null, inputDialog,
+                        "Please Enter New Students Info", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    studentList.addStudent(new Student(tName.getText(), Integer.parseInt(tTel.getText()), tEmail.getText()));
+                }
+                try{
+                    FileOutputStream saveFile = new FileOutputStream("saveFile_" + unitsBox.getSelectedItem().toString()+ ".dat");
+                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
+                    save.writeObject(studentList);
+                    save.close();
+                }
+                catch (FileNotFoundException ex){
+                    ex.printStackTrace();
+                }
+                catch (IOException ex){
+                    ex.printStackTrace();
+                }
+
+
             }
         });
         buttonPane.add(bAdd);
-        
+
         bDelete = new JButton("Delete");
         bDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               // bDelete_actionPerformed(e);
+                Student s;
+                for (JCheckBox jch: checkBoxes){
+                    if (jch.isSelected()){
+                        try {
+                            s = studentList.getStudentById(Integer.parseInt(jch.getText()));
+                            studentList.deleteStudent(s);
+                        } catch (NoStudentException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+
+                try{
+                    FileOutputStream saveFile = new FileOutputStream("saveFile_" + unitsBox.getSelectedItem().toString()+ ".dat");
+                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
+                    save.writeObject(studentList);
+                    save.close();
+                }
+                catch (FileNotFoundException ex){
+                    ex.printStackTrace();
+                }
+                catch (IOException ex){
+                    ex.printStackTrace();
+                }
             }
         });
         buttonPane.add(bDelete);
-        
+
         bEdit = new JButton("Edit");
         bEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //bEdit_actionPerformed(e);
+                Student selected = null;
+                for (JCheckBox ch: checkBoxes){
+                    if (ch.isSelected()){
+                        try {
+                            selected = studentList.getStudentById(Integer.parseInt(ch.getText()));
+                        } catch (NoStudentException e1) {
+                            e1.printStackTrace();
+                        }
+                        break;
+                    }
+                }
+
+                JPanel inputDialog = new JPanel();
+                JPanel info = new JPanel();
+                //JPanel buttons = new JPanel();
+                JLabel lName = new JLabel("Name");
+                JTextField tName = new JTextField(selected.getName());
+                JLabel lTel = new JLabel("Telephone Number");
+                JTextField tTel = new JTextField(selected.getTel());
+                JLabel lEmail = new JLabel("Email");
+                JTextField tEmail = new JTextField(selected.getEmail());
+                info.setLayout(new GridLayout(3,3));
+                info.add(lName);
+                info.add(tName);
+                info.add(lTel);
+                info.add(tTel);
+                info.add(lEmail);
+                info.add(tEmail);
+                inputDialog.add(info, BorderLayout.CENTER);
+
+                int result = JOptionPane.showConfirmDialog(null, inputDialog,
+                        "Please Enter New Students Info", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+
+                    studentList.addStudent(new Student(tName.getText(), Integer.parseInt(tTel.getText()), tEmail.getText()));
+                }
+                studentList.deleteStudent(selected);
+                try{
+                    FileOutputStream saveFile = new FileOutputStream("saveFile_" + unitsBox.getSelectedItem().toString()+ ".dat");
+                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
+                    save.writeObject(studentList);
+                    save.close();
+                }
+                catch (FileNotFoundException ex){
+                    ex.printStackTrace();
+                }
+                catch (IOException ex){
+                    ex.printStackTrace();
+                }
             }
         });
         buttonPane.add(bEdit);
-        
+
         bLoad = new JButton("Load");
         bLoad.addActionListener(new ActionListener() {
             @Override
@@ -89,71 +212,26 @@ public class ViewListGUI extends JFrame{
             }
         });
         buttonPane.add(bLoad);
-        
+
         bBack = new JButton("Back");
         bBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	dispose();
-            	MainGUI mg = new MainGUI();
-            	mg.pack();
-            	mg.setVisible(true);	
+                dispose();
+                MainGUI mg = new MainGUI();
+                mg.pack();
+                mg.setVisible(true);
             }
         });
         buttonPane.add(bBack);
 
         contentPane.add(buttonPane, BorderLayout.SOUTH);
         contentPane.add(infoPanel, BorderLayout.NORTH);
+    }
 
     
 
-    //public void bAdd_actionPerformed(ActionEvent e) {
 
-    	//studentList.addElement("new");
-    //}
-    
-    
-    
-    
-    //*private void bSubmit_actionPerformed(ActionEvent e) {
-
-        //for (JCheckBox jChB: checkBoxes){
-          //  if (jChB.isSelected()){
-        //        try {
-       //             absentStudents.add(studentList.getStudentById(Integer.parseInt(studentList.getNameList().get(checkBoxes.indexOf(jChB))[0]))) ;
-       //         } catch (NoStudentException e1) {
-      //              e1.printStackTrace();
-      //          }
-     //       }
-     //   }
-
-      //  for (Student stud : studentList.getArrayOfStudents()) {
-      //      if (absentStudents.contains(stud)) {
-      //          if (stud.checkAbsenceLimit(this.unitsBox.getSelectedItem().toString()) < 7){
-      //              stud.addAbsence(new Absence(date.toString(), unitsBox.getSelectedItem().toString()));
-
-    //           }
-
-       //     }
-    //    }
-
-  /*   try{
-            FileOutputStream saveFile = new FileOutputStream("saveFile_" + this.unitsBox.getSelectedItem().toString()+ ".dat");
-            ObjectOutputStream save = new ObjectOutputStream(saveFile);
-            save.writeObject(studentList);
-            save.close();
-        }
-        catch (FileNotFoundException ex){
-            ex.printStackTrace();
-        }
-        catch (IOException ex){
-            ex.printStackTrace();
-        }
-
-        JFrame f12 = new PreviewGUI(this.unitsBox.getSelectedItem().toString());
-        f12.pack();
-        f12.setVisible(true);
-    }*/
 
     private void bLoad_actionPerformed(ActionEvent e) {
         try {
@@ -169,17 +247,22 @@ public class ViewListGUI extends JFrame{
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-}
-        tablePane.setLayout(new GridLayout(studentList.getNameList().size(), 2));
+
+        tablePane.setLayout(new GridLayout(studentList.getNameList().size(), 4));
         int i = 0;
         for (Student s: studentList.getArrayOfStudents()){
-            tablePane.add(new JLabel(String.valueOf(s.getId())));
+            checkBoxes.add(new JCheckBox(String.valueOf(s.getId()), false));
+            tablePane.add(checkBoxes.get(i));
             tablePane.add(new JLabel(s.getName()));
+            tablePane.add(new JLabel(String.valueOf(s.checkAbsenceLimit(studentList.getUnit().getUnitName()))));
+            tablePane.add(new JLabel(String.valueOf(studentList.getUnit().getAbsencesPermitted())));
+
             i++;
         }
 
         contentPane.add(tablePane, BorderLayout.CENTER);
-        //this.revalidate();
-        this.repaint();
+        tablePane.revalidate();
+        tablePane.repaint();
+
     }
 }

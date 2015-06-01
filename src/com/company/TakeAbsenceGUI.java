@@ -44,6 +44,7 @@ public class TakeAbsenceGUI extends JFrame{
     private JLabel lShowUnit;
     private JLabel lShowProf;
     private JLabel lShowYear;
+
     private Date date;
 
     public TakeAbsenceGUI(){
@@ -76,7 +77,9 @@ public class TakeAbsenceGUI extends JFrame{
 
         infoPanel = new JPanel();
         infoPanel.setLayout(new FlowLayout());
-        lUnit = new JLabel("Year:");
+
+        JLabel lUnitsChoose = new JLabel("Please choose a unit to Take Absences");
+        infoPanel.add(lUnitsChoose);
         unitsBox = new JComboBox();
         for (Unit u: units.getUnits()){
             unitsBox.addItem(u.getUnitName());
@@ -196,9 +199,27 @@ public class TakeAbsenceGUI extends JFrame{
             i++;
         }
 
+        infoPanel.removeAll();
+        infoPanel.setLayout(new GridLayout(4,4));
+        lYear = new JLabel("Year:");
+        lShowYear = new JLabel(String.valueOf(studentList.getYear()));
+        lUnit = new JLabel("Unit:");
+        lShowUnit = new JLabel(unitsBox.getSelectedItem().toString());
+        lProfessor = new JLabel("Professor:");
+        lShowProf = new JLabel(studentList.getUnit().getProfName());
+        infoPanel.add(lUnit);
+        infoPanel.add(lShowUnit);
+        infoPanel.add(lYear);
+        infoPanel.add(lShowYear);
+        infoPanel.add(lProfessor);
+        infoPanel.add(lShowProf);
+        infoPanel.add(new JLabel("Date"));
+        infoPanel.add(new JLabel(String.valueOf(date)));
+        //contentPane.remove(tablePane);
         contentPane.add(tablePane, BorderLayout.CENTER);
-        tablePane.revalidate();
-        tablePane.repaint();
+        contentPane.add(infoPanel, BorderLayout.NORTH);
+        contentPane.revalidate();
+        contentPane.repaint();
 
 
     }

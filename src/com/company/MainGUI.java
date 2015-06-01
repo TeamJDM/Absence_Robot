@@ -99,9 +99,9 @@ public class MainGUI extends JFrame{
     }
     
     public void bViewList_actionPerformed(ActionEvent e){
-      //JFrame absenceGui  = new AbsenceGUI();
-      //absenceGui.pack();
-      //absenceGui.setVisible(true);
+      JFrame viewListGUI  = new ViewListGUI();
+      viewListGUI.pack();
+      viewListGUI.setVisible(true);
     }
     
     public void bStudentRecord_actionPerformed(ActionEvent e){
