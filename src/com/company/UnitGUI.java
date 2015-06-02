@@ -83,7 +83,7 @@ public class UnitGUI extends JFrame{
 
 
         contentPane = (JPanel)this.getContentPane();
-        contentPane.setPreferredSize(new Dimension(200,150));
+        //contentPane.setPreferredSize(new Dimension(800,600));
         this.setTitle("Choose Unit to create a Student List");
 
         detailsPane = new JPanel();

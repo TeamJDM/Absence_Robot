@@ -50,6 +50,7 @@ public class Absence_Robot {
 
         JFrame f3 = new MainGUI();
         f3.pack();
+        f3.setLocationRelativeTo(null);
         f3.setVisible(true);
 
     }

@@ -24,6 +24,9 @@ public class MainGUI extends JFrame{
     public MainGUI(){
         //unitPanel = new UnitGUI();
     	//contentPaneAll = (JPanel)this.getContentPane();
+//
+//        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+//        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     	contentPane = (JPanel)this.getContentPane();
     	contentPane.setPreferredSize(new Dimension(350,350));
         this.setTitle("MainWindow");
@@ -97,24 +100,28 @@ public class MainGUI extends JFrame{
 
         JFrame unitGui = new UnitGUI();
         unitGui.pack();
+        unitGui.setLocationRelativeTo(null);
         unitGui.setVisible(true);
     }
     
     public void bViewList_actionPerformed(ActionEvent e){
-      JFrame viewListGUI  = new ViewListGUI();
-      viewListGUI.pack();
-      viewListGUI.setVisible(true);
+        JFrame viewListGUI  = new ViewListGUI();
+        viewListGUI.pack();
+        viewListGUI.setLocationRelativeTo(null);
+        viewListGUI.setVisible(true);
     }
     
     public void bStudentRecord_actionPerformed(ActionEvent e){
         JFrame unitGui  = new StudentRecordGUI();
         unitGui.pack();
+        unitGui.setLocationRelativeTo(null);
         unitGui.setVisible(true);
     }
     
     public void bExit_actionPerformed(ActionEvent e){
         JFrame unitGui  = new JFrame();
         unitGui.pack();
+        unitGui.setLocationRelativeTo(null);
         unitGui.setVisible(true);
     }
 }

@@ -45,7 +45,7 @@ public class StudentGUI extends JFrame{
         studentList = new StudentList(year, unit);
 //        contentPane = (JPanel)this.getContentPane();
 //        this.setTitle("Add Student");
-        contentPane.setPreferredSize(new Dimension(450,200));
+        //contentPane.setPreferredSize(new Dimension(450,200));
         this.setTitle("Add Student");
 
         detailsPane = new JPanel();

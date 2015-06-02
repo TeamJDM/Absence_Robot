@@ -55,7 +55,7 @@ public class ViewListGUI extends JFrame{
         }
 
         contentPane = (JPanel) this.getContentPane();
-        contentPane.setPreferredSize(new Dimension(300, 200));
+        //contentPane.setPreferredSize(new Dimension(300, 200));
         tablePane = new JPanel();
         this.setTitle("View List");
 
@@ -206,6 +206,8 @@ public class ViewListGUI extends JFrame{
                 catch (IOException ex){
                     ex.printStackTrace();
                 }
+
+                
             }
         });
         buttonPane.add(bEdit);
@@ -279,6 +281,7 @@ public class ViewListGUI extends JFrame{
         contentPane.add(tablePane, BorderLayout.CENTER);
         tablePane.revalidate();
         tablePane.repaint();
+        this.pack();
 
     }
 }
