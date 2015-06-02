@@ -93,6 +93,8 @@ public class MainGUI extends JFrame{
     }
 
     public void bStudentList_actionPerformed(ActionEvent e){
+
+
         JFrame unitGui = new UnitGUI();
         unitGui.pack();
         unitGui.setVisible(true);

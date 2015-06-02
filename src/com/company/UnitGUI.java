@@ -32,6 +32,19 @@ public class UnitGUI extends JFrame{
 
     public UnitGUI() {
 
+        //units = new UnitList();
+
+//        try {
+//            FileOutputStream saveFile = new FileOutputStream("units.dat");
+//            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+//            save.writeObject(units);
+//            save.close();
+//
+//        } catch (FileNotFoundException ex) {
+//            ex.printStackTrace();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
 
         try {
             FileInputStream saveFile = new FileInputStream("units.dat");
@@ -40,7 +53,28 @@ public class UnitGUI extends JFrame{
             save.close();
 
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            int res = JOptionPane.showConfirmDialog(null, "Do you want to create it?", "File Missing", JOptionPane.OK_CANCEL_OPTION);
+
+            if (res == JOptionPane.OK_OPTION){
+                units = new UnitList();
+                try {
+                    FileOutputStream saveFile = new FileOutputStream("units.dat");
+                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
+                    save.writeObject(units);
+                    save.close();
+
+                } catch (FileNotFoundException ex2) {
+                    ex.printStackTrace();
+                } catch (IOException ex2) {
+                    ex.printStackTrace();
+                }
+
+                dispose();
+                JFrame back = new MainGUI();
+                back.pack();
+                back.setVisible(true);
+            }
+
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
@@ -118,7 +152,6 @@ public class UnitGUI extends JFrame{
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-
             }
         });
         contentPane.add(detailsPane, BorderLayout.CENTER);
