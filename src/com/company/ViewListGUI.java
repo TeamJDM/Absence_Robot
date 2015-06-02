@@ -96,19 +96,20 @@ public class ViewListGUI extends JFrame{
                         "Please Enter New Students Info", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
                     studentList.addStudent(new Student(tName.getText(), Integer.parseInt(tTel.getText()), tEmail.getText()));
+                    try{
+                        FileOutputStream saveFile = new FileOutputStream("saveFile_" + unitsBox.getSelectedItem().toString()+ ".dat");
+                        ObjectOutputStream save = new ObjectOutputStream(saveFile);
+                        save.writeObject(studentList);
+                        save.close();
+                    }
+                    catch (FileNotFoundException ex){
+                        ex.printStackTrace();
+                    }
+                    catch (IOException ex){
+                        ex.printStackTrace();
+                    }
                 }
-                try{
-                    FileOutputStream saveFile = new FileOutputStream("saveFile_" + unitsBox.getSelectedItem().toString()+ ".dat");
-                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
-                    save.writeObject(studentList);
-                    save.close();
-                }
-                catch (FileNotFoundException ex){
-                    ex.printStackTrace();
-                }
-                catch (IOException ex){
-                    ex.printStackTrace();
-                }
+
 
 
             }
@@ -119,16 +120,21 @@ public class ViewListGUI extends JFrame{
         bDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Student s;
-                for (JCheckBox jch: checkBoxes){
-                    if (jch.isSelected()){
-                        try {
-                            s = studentList.getStudentById(Integer.parseInt(jch.getText()));
-                            studentList.deleteStudent(s);
-                        } catch (NoStudentException e1) {
-                            e1.printStackTrace();
+                try{
+                    Student s;
+                    for (JCheckBox jch: checkBoxes){
+                        if (jch.isSelected()){
+                            try {
+                                s = studentList.getStudentById(Integer.parseInt(jch.getText()));
+                                studentList.deleteStudent(s);
+                            } catch (NoStudentException e1) {
+                                e1.printStackTrace();
+                            }
                         }
                     }
+                }
+                catch (NullPointerException ex){
+                    JOptionPane.showMessageDialog(null, "Error", "Please choose a Student to delete!", JOptionPane.WARNING_MESSAGE);
                 }
 
                 try{
@@ -260,6 +266,16 @@ public class ViewListGUI extends JFrame{
             i++;
         }
 
+        infoPanel.removeAll();
+        infoPanel.setLayout(new GridLayout(3,3));
+        infoPanel.add(new JLabel("Year:"));
+        infoPanel.add(new JLabel(String.valueOf(studentList.getYear())));
+        infoPanel.add(new JLabel("Unit"));
+        infoPanel.add(new JLabel(unitsBox.getSelectedItem().toString()));
+        infoPanel.add(new JLabel("Professor"));
+        infoPanel.add(new JLabel(studentList.getUnit().getProfName()));
+
+        contentPane.add(infoPanel, BorderLayout.NORTH);
         contentPane.add(tablePane, BorderLayout.CENTER);
         tablePane.revalidate();
         tablePane.repaint();
