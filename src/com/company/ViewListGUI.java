@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +32,7 @@ public class ViewListGUI extends JFrame{
     private JButton bAdd;
     private JButton bDelete;
     private JButton bEdit;
-    private JButton bBack;
+    private JButton bDone;
     private JButton bLoad;
 
     private Unit selectedUnit;
@@ -55,7 +56,7 @@ public class ViewListGUI extends JFrame{
         }
 
         contentPane = (JPanel) this.getContentPane();
-        //contentPane.setPreferredSize(new Dimension(300, 200));
+        contentPane.setPreferredSize(new Dimension(400, 200));
         tablePane = new JPanel();
         this.setTitle("View List");
 
@@ -66,6 +67,7 @@ public class ViewListGUI extends JFrame{
             unitsBox.addItem(u.getUnitName());
         }
         infoPanel.add(unitsBox);
+        unitsBox.setSelectedIndex(-1);
 
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
@@ -79,7 +81,7 @@ public class ViewListGUI extends JFrame{
                 JPanel buttons = new JPanel();
                 JLabel lName = new JLabel("Name");
                 JTextField tName = new JTextField();
-                JLabel lTel = new JLabel("Telephone Namber");
+                JLabel lTel = new JLabel("Telephone Number");
                 JTextField tTel = new JTextField();
                 JLabel lEmail = new JLabel("Email");
                 JTextField tEmail = new JTextField();
@@ -96,20 +98,19 @@ public class ViewListGUI extends JFrame{
                         "Please Enter New Students Info", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
                     studentList.addStudent(new Student(tName.getText(), Integer.parseInt(tTel.getText()), tEmail.getText()));
-                    try{
-                        FileOutputStream saveFile = new FileOutputStream("saveFile_" + unitsBox.getSelectedItem().toString()+ ".dat");
-                        ObjectOutputStream save = new ObjectOutputStream(saveFile);
-                        save.writeObject(studentList);
-                        save.close();
-                    }
-                    catch (FileNotFoundException ex){
-                        ex.printStackTrace();
-                    }
-                    catch (IOException ex){
-                        ex.printStackTrace();
-                    }
                 }
-
+                try{
+                    FileOutputStream saveFile = new FileOutputStream("saveFile_" + unitsBox.getSelectedItem().toString()+ ".dat");
+                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
+                    save.writeObject(studentList);
+                    save.close();
+                }
+                catch (FileNotFoundException ex){
+                    ex.printStackTrace();
+                }
+                catch (IOException ex){
+                    ex.printStackTrace();
+                }
 
 
             }
@@ -120,21 +121,16 @@ public class ViewListGUI extends JFrame{
         bDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
-                    Student s;
-                    for (JCheckBox jch: checkBoxes){
-                        if (jch.isSelected()){
-                            try {
-                                s = studentList.getStudentById(Integer.parseInt(jch.getText()));
-                                studentList.deleteStudent(s);
-                            } catch (NoStudentException e1) {
-                                e1.printStackTrace();
-                            }
+                Student s;
+                for (JCheckBox jch: checkBoxes){
+                    if (jch.isSelected()){
+                        try {
+                            s = studentList.getStudentById(Integer.parseInt(jch.getText()));
+                            studentList.deleteStudent(s);
+                        } catch (NoStudentException e1) {
+                            e1.printStackTrace();
                         }
                     }
-                }
-                catch (NullPointerException ex){
-                    JOptionPane.showMessageDialog(null, "Error", "Please choose a Student to delete!", JOptionPane.WARNING_MESSAGE);
                 }
 
                 try{
@@ -206,41 +202,43 @@ public class ViewListGUI extends JFrame{
                 catch (IOException ex){
                     ex.printStackTrace();
                 }
-
-                
             }
         });
         buttonPane.add(bEdit);
 
-        bLoad = new JButton("Load");
+        bLoad = new JButton("Load the list first");
         bLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bLoad_actionPerformed(e);
+            	try {
+           	     unitsBox.getSelectedIndex();
+           	     bLoad_actionPerformed(e);
+           	}
+           	catch (Exception wi2){
+           		JOptionPane.showMessageDialog(null, "You need to select the specific unit", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+           	}
+            	
             }
         });
         buttonPane.add(bLoad);
 
-        bBack = new JButton("Back");
-        bBack.addActionListener(new ActionListener() {
+        bDone = new JButton("Done");
+        bDone.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 MainGUI mg = new MainGUI();
+                mg.setLocationRelativeTo(null);
                 mg.pack();
                 mg.setVisible(true);
             }
         });
-        buttonPane.add(bBack);
+        buttonPane.add(bDone);
 
         contentPane.add(buttonPane, BorderLayout.SOUTH);
         contentPane.add(infoPanel, BorderLayout.NORTH);
     }
-
     
-
-
-
     private void bLoad_actionPerformed(ActionEvent e) {
         try {
             FileInputStream saveFile = new FileInputStream("saveFile_" + this.unitsBox.getSelectedItem().toString()+ ".dat");
@@ -268,20 +266,9 @@ public class ViewListGUI extends JFrame{
             i++;
         }
 
-        infoPanel.removeAll();
-        infoPanel.setLayout(new GridLayout(3,3));
-        infoPanel.add(new JLabel("Year:"));
-        infoPanel.add(new JLabel(String.valueOf(studentList.getYear())));
-        infoPanel.add(new JLabel("Unit"));
-        infoPanel.add(new JLabel(unitsBox.getSelectedItem().toString()));
-        infoPanel.add(new JLabel("Professor"));
-        infoPanel.add(new JLabel(studentList.getUnit().getProfName()));
-
-        contentPane.add(infoPanel, BorderLayout.NORTH);
         contentPane.add(tablePane, BorderLayout.CENTER);
         tablePane.revalidate();
         tablePane.repaint();
-        this.pack();
 
     }
 }
