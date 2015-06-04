@@ -4,19 +4,16 @@ package com.company;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Dimos on 5/11/15.
- */
 public class StudentList implements Serializable {
 
     private ArrayList<Student> studentList;
-    private int year;
+    //private int year;
     private int numberOfStudents;
     private Unit unit;
 
-    public StudentList(int year, Unit unit){
+    public StudentList( Unit unit){
         studentList = new ArrayList<Student>();
-        this.year = year;
+        //this.year = year;
         this.unit = unit;
         this.numberOfStudents = 0;
     }
@@ -41,13 +38,7 @@ public class StudentList implements Serializable {
         return unit;
     }
 
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
+    
 
     public int getNumberOfStudents() {
         return numberOfStudents;
