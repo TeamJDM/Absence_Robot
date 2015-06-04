@@ -132,7 +132,13 @@ public class ViewListGUI extends JFrame {
                     ex.printStackTrace();
                 }
 
-                tablePane.setLayout(new GridLayout(studentList.getNameList().size(), 4));
+                tablePane.setLayout(new GridLayout(studentList.getNameList().size()+1, 4));
+                tablePane.add(new JLabel("ID"));
+                tablePane.add(new JLabel("Name"));
+                tablePane.add(new JLabel("Absences"));
+                tablePane.add(new JLabel("Ansences Permitted"));
+
+                checkBoxes.clear();
                 int i = 0;
                 for (Student s : studentList.getArrayOfStudents()) {
                     checkBoxes.add(new JCheckBox(String.valueOf(s.getId()), false));
@@ -197,7 +203,11 @@ public class ViewListGUI extends JFrame {
                     ex.printStackTrace();
                 }
 
-                tablePane.setLayout(new GridLayout(studentList.getNameList().size(), 4));
+                tablePane.setLayout(new GridLayout(studentList.getNameList().size()+1, 4));
+                tablePane.add(new JLabel("ID"));
+                tablePane.add(new JLabel("Name"));
+                tablePane.add(new JLabel("Absences"));
+                tablePane.add(new JLabel("Ansences Permitted"));
                 int i = 0;
                 for (Student si : studentList.getArrayOfStudents()) {
                     checkBoxes.add(new JCheckBox(String.valueOf(si.getId()), false));
@@ -255,7 +265,11 @@ public class ViewListGUI extends JFrame {
             ex.printStackTrace();
         }
 
-        tablePane.setLayout(new GridLayout(studentList.getNameList().size(), 4));
+        tablePane.setLayout(new GridLayout(studentList.getNameList().size()+1, 4));
+        tablePane.add(new JLabel("ID"));
+        tablePane.add(new JLabel("Name"));
+        tablePane.add(new JLabel("Absences"));
+        tablePane.add(new JLabel("Ansences Permitted"));
         int i = 0;
         for (Student s : studentList.getArrayOfStudents()) {
             checkBoxes.add(new JCheckBox(String.valueOf(s.getId()), false));

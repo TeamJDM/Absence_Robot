@@ -36,14 +36,15 @@ public class StudentRecordGUI extends JFrame{
 
         studentLists = new ArrayList<StudentList>();
         contentPane = (JPanel)this.getContentPane();
-        contentPane.setPreferredSize(new Dimension(350,150));
         this.setTitle("Search for Student");
 
+
         detailsPane = new JPanel();
-        detailsPane.setLayout(new GridLayout(1,1));
+        detailsPane.setLayout(new FlowLayout());
         lName = new JLabel("Student Name");
         detailsPane.add(lName);
         tName = new JTextField();
+        tName.setColumns(30);
         detailsPane.add(tName);
 
         buttonPane = new JPanel();
@@ -109,30 +110,25 @@ public class StudentRecordGUI extends JFrame{
 
     }
     public void bSearch_actionPerformed(ActionEvent e){
-        JPanel showPane = new JPanel();
+        JScrollPane showPane = new JScrollPane();
         JPanel infoStudentPne = new JPanel();
         infoStudentPne.setLayout(new GridLayout(2,2));
 
         DefaultTableModel model = new DefaultTableModel();
         JTable table = new JTable(model);
         model.addColumn("Unit Name");
-        //model.addColumn("Student ID");
-        //model.addColumn("Student Name");
         model.addColumn("Student Absences");
         model.addColumn("Absences Permitted");
         String name = null;
         int id = 0;
+
         for (StudentList sl: studentLists){
             for (Student s: sl.getArrayOfStudents()){
                 if (tName.getText().equals(s.getName())){
-
+                    firstId = s.getId();
                     name = s.getName();
                     id = s.getId();
-//                    showPane.add(new JLabel(sl.getUnit().getUnitName()));
-//                    showPane.add(new JLabel(String.valueOf(s.getId())));
-//                    showPane.add(new JLabel(s.getName()));
-//                    showPane.add(new JLabel(String.valueOf(s.checkAbsenceLimit(sl.getUnit().getUnitName()))));
-//                    showPane.add(new JLabel(String.valueOf(sl.getUnit().getAbsencesPermitted())));
+
                     model.addRow(new Object[]{sl.getUnit().getUnitName(),s.checkAbsenceLimit(sl.getUnit().getUnitName()),sl.getUnit().getAbsencesPermitted()});
                 }
             }
@@ -143,12 +139,39 @@ public class StudentRecordGUI extends JFrame{
         infoStudentPne.add(new JLabel(name));
         contentPane.remove(detailsPane);
         contentPane.add(infoStudentPne, BorderLayout.NORTH);
-        contentPane.add(table, BorderLayout.CENTER);
-        contentPane.repaint();
+        showPane.setViewportView(table);
+        contentPane.add(showPane, BorderLayout.CENTER);
+        this.setSize(600, 400);
 
-    }    
 
-        //this.pack();
+    }
+
+    private boolean isForAll() {
+
+        ArrayList<Student> studentsSearched = new ArrayList<Student>();
+        for (StudentList sl: studentLists){
+            for (Student s: sl.getArrayOfStudents()) {
+                if (tName.getText().equals(s.getName())) {
+                    studentsSearched.add(s);
+                }
+            }
+
+        }
+        int[] studentPos = new int[studentsSearched.size()];
+        for (int i=0; i < studentsSearched.size(); i++){
+            if (studentsSearched.get(i).getId() != studentsSearched.get(i+1).getId()){
+
+                studentPos[i] = i;
+            }
+        }
+        for (Student s2:studentsSearched){
+            if (s2.getId() == s2.getId()){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
     
 
