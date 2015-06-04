@@ -7,6 +7,7 @@
 package com.company;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,10 +38,17 @@ public class TakeAbsenceGUI extends JFrame{
     private JComboBox unitsBox;
     private JButton bLoad;
     private JButton bSubmit;
-    private JButton bBack;
+    private JButton bDone;
     private JLabel lUnit;
     private JLabel lProfessor;
+    //private JLabel lYear;
+    
     private JLabel lYear;
+    private JTextField tfYear;
+    private JLabel lDate;
+    private JTextField tfDate;
+    private JLabel lTime;
+    private JTextField tfTime;
     private JLabel lShowUnit;
     private JLabel lShowProf;
     private JLabel lShowYear;
@@ -76,7 +84,7 @@ public class TakeAbsenceGUI extends JFrame{
         this.setTitle("Take Absences");
 
         infoPanel = new JPanel();
-        infoPanel.setLayout(new FlowLayout());
+        infoPanel.setLayout(new GridLayout(2,1));
 
         JLabel lUnitsChoose = new JLabel("Please choose a unit to Take Absences");
         infoPanel.add(lUnitsChoose);
@@ -85,13 +93,23 @@ public class TakeAbsenceGUI extends JFrame{
             unitsBox.addItem(u.getUnitName());
         }
         infoPanel.add(unitsBox);
+        unitsBox.setSelectedIndex(-1);
+        
+        
+       
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
         bLoad = new JButton("Load");
         bLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bLoad_actionPerformed(e);
+                try{
+                	unitsBox.getSelectedIndex();
+                	bLoad_actionPerformed(e);
+                }
+                catch(Exception ex){
+                	JOptionPane.showMessageDialog(null, "You need to select the specific unit", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         buttonPane.add(bLoad);
@@ -99,23 +117,25 @@ public class TakeAbsenceGUI extends JFrame{
         bSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bSubmit_actionPerformed(e);
+                dispose();
+            	bSubmit_actionPerformed(e);
             }
         });
         buttonPane.add(bSubmit);
         
-        bBack = new JButton("Back");
-        bBack.addActionListener(new ActionListener() {
+        bDone = new JButton("Done");
+        bDone.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	dispose();
             	MainGUI mg = new MainGUI();
+            	mg.setLocationRelativeTo(null);
             	mg.pack();
             	mg.setVisible(true);
             	
             }
         });
-        buttonPane.add(bBack);
+        buttonPane.add(bDone);
 
 
 
@@ -147,9 +167,6 @@ public class TakeAbsenceGUI extends JFrame{
 
             }
         }
-
-
-
         try{
             FileOutputStream saveFile = new FileOutputStream("saveFile_" + this.unitsBox.getSelectedItem().toString()+ ".dat");
             ObjectOutputStream save = new ObjectOutputStream(saveFile);
@@ -165,6 +182,7 @@ public class TakeAbsenceGUI extends JFrame{
 
         JFrame f12 = new PreviewGUI(this.unitsBox.getSelectedItem().toString());
         f12.pack();
+        f12.setLocationRelativeTo(null);
         f12.setVisible(true);
 
         absentStudents.clear();
@@ -200,9 +218,9 @@ public class TakeAbsenceGUI extends JFrame{
         }
 
         infoPanel.removeAll();
-        infoPanel.setLayout(new GridLayout(4,4));
-        lYear = new JLabel("Year:");
-        lShowYear = new JLabel(String.valueOf(studentList.getYear()));
+        infoPanel.setLayout(new GridLayout(3,3));
+        //lYear = new JLabel("Year:");
+        //lShowYear = new JLabel(String.valueOf(studentList.getYear()));
         lUnit = new JLabel("Unit:");
         lShowUnit = new JLabel(unitsBox.getSelectedItem().toString());
         lProfessor = new JLabel("Professor:");
