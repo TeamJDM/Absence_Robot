@@ -45,7 +45,15 @@ public class StudentGUI extends JFrame{
 
     	thisFrame = this;
         contentPane = (JPanel)this.getContentPane();
+<<<<<<< Updated upstream
         studentList = new StudentList( unit);
+=======
+        studentList = new StudentList(year, unit);
+//        contentPane = (JPanel)this.getContentPane();
+//        this.setTitle("Add Student");
+        //contentPane.setPreferredSize(new Dimension(450,200));
+        this.setSize(500,this.getHeight());
+>>>>>>> Stashed changes
         this.setTitle("Add Student");
 
         detailsPane = new JPanel();

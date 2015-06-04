@@ -94,6 +94,18 @@ public class StudentRecordGUI extends JFrame{
                 ex.printStackTrace();
             }
         }
+<<<<<<< Updated upstream
+=======
+
+
+
+    }
+    public void bCancel_actionPerformed(ActionEvent e){
+        JFrame unitGui  = new StudentRecordGUI();
+        unitGui.pack();
+        unitGui.setLocationRelativeTo(null);
+        unitGui.setVisible(true);
+>>>>>>> Stashed changes
     }
     public void bSearch_actionPerformed(ActionEvent e){
         JPanel showPane = new JPanel();
@@ -120,5 +132,11 @@ public class StudentRecordGUI extends JFrame{
         contentPane.remove(detailsPane);
         contentPane.add(table, BorderLayout.CENTER);
         contentPane.repaint();
+<<<<<<< Updated upstream
     }    
+=======
+        this.pack();
+    }
+    
+>>>>>>> Stashed changes
 }
