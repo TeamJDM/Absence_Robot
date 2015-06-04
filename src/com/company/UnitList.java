@@ -3,9 +3,6 @@ package com.company;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Dimos on 6/1/15.
- */
 public class UnitList implements Serializable{
 
     private ArrayList<Unit> units;
@@ -13,9 +10,9 @@ public class UnitList implements Serializable{
     public UnitList(){
 
         units = new ArrayList<Unit>();
-        this.addUnit(new Unit("Math", "Kokoris", 12));
-        this.addUnit(new Unit("Buisenss", "Diamantidis", 9));
-        this.addUnit(new Unit("OOP", "Eleutherakis", 8));
+        this.addUnit(new Unit("Math", "Veloudis", 12));
+        this.addUnit(new Unit("Information Systems", "Diamantidis", 9));
+        this.addUnit(new Unit("OOP", "Eleftherakis", 8));
         this.addUnit(new Unit("SAD", "Stamatopoulou", 6));
     }
 
