@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.nio.file.Paths;
+import java.nio.files.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,13 +17,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class StudentRecordGUI extends JFrame{
 
-
     private JPanel contentPane;
     private JPanel detailsPane;
     private JPanel buttonPane;
-    
-
-    
+      
     private JLabel lName;
 
     private JTextField tName;
@@ -65,12 +62,12 @@ public class StudentRecordGUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
             	MainGUI mg = new MainGUI();
             	mg.pack();
+            	mg.setLocationRelativeTo(null);
             	mg.setVisible(true);
             	dispose();
             }
         });
         buttonPane.add(bBack);
-        
         
         contentPane.add(buttonPane, BorderLayout.SOUTH);
         contentPane.add(detailsPane, BorderLayout.CENTER);
@@ -88,7 +85,7 @@ public class StudentRecordGUI extends JFrame{
                 ObjectInputStream save = new ObjectInputStream(saveFile);
                 this.studentLists.add((StudentList) save.readObject());
                 save.close();
-
+                
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             } catch (IOException ex) {
@@ -97,22 +94,9 @@ public class StudentRecordGUI extends JFrame{
                 ex.printStackTrace();
             }
         }
-
-
-
-    }
-    public void bCancel_actionPerformed(ActionEvent e){
-        JFrame unitGui  = new StudentRecordGUI();
-        unitGui.pack();
-        unitGui.setVisible(true);
     }
     public void bSearch_actionPerformed(ActionEvent e){
-//        JFrame unitGui  = new StudentRecordGUI();
-//        unitGui.pack();
-//        unitGui.setVisible(true);
         JPanel showPane = new JPanel();
-        //showPane.setLayout(new GridLayout(7, 5));
-        //JTable table = new JTable();
         DefaultTableModel model = new DefaultTableModel();
         JTable table = new JTable(model);
         model.addColumn("Unit Name");
@@ -129,16 +113,12 @@ public class StudentRecordGUI extends JFrame{
 //                    showPane.add(new JLabel(s.getName()));
 //                    showPane.add(new JLabel(String.valueOf(s.checkAbsenceLimit(sl.getUnit().getUnitName()))));
 //                    showPane.add(new JLabel(String.valueOf(sl.getUnit().getAbsencesPermitted())));
-
                     model.addRow(new Object[]{sl.getUnit().getUnitName(),String.valueOf(s.getId()),s.getName(),s.checkAbsenceLimit(sl.getUnit().getUnitName()),sl.getUnit().getAbsencesPermitted()});
                 }
-
             }
         }
-
         contentPane.remove(detailsPane);
         contentPane.add(table, BorderLayout.CENTER);
         contentPane.repaint();
-    }
-    
+    }    
 }
