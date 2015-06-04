@@ -10,23 +10,15 @@ public class MainGUI extends JFrame{
     protected JPanel contentPane;
     private JPanel mainGuiPane;
     private JPanel buttonPane;
-    //private StudentGUI studentAddPanel;
-    //private JPanel unitPanel;
     
     private JButton bTakeAbsence;
     private JButton bStudentList;
     private JButton bViewList;
     private JButton bStudentRecord;
     private JButton bExit;
-
-
     
     public MainGUI(){
-        //unitPanel = new UnitGUI();
-    	//contentPaneAll = (JPanel)this.getContentPane();
-//
-//        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-//        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+    	
     	contentPane = (JPanel)this.getContentPane();
     	contentPane.setPreferredSize(new Dimension(350,350));
         this.setTitle("MainWindow");
@@ -34,18 +26,8 @@ public class MainGUI extends JFrame{
         buttonPane = new JPanel();
         buttonPane.setLayout(new GridLayout(5,1));
         
-        bTakeAbsence = new JButton("Take Absence");
-        bTakeAbsence.setBackground(Color.GRAY);
-        bTakeAbsence.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	dispose();
-            	bTakeAbsence_actionPerformed(e);
-            }
-        });
-        buttonPane.add(bTakeAbsence);
-        bStudentList = new JButton("Student List");
-        bStudentList.setBackground(Color.CYAN);
+        bStudentList = new JButton("Create New Student Class");
+        bStudentList.setBackground(Color.LIGHT_GRAY);
         buttonPane.add(bStudentList);
         bStudentList.addActionListener(new ActionListener() {
             @Override
@@ -54,8 +36,8 @@ public class MainGUI extends JFrame{
             	bStudentList_actionPerformed(e);
             }
         });
-        bViewList = new JButton("View List");
-        bViewList.setBackground(Color.GRAY);
+        bViewList = new JButton("Review Student Class");
+        bViewList.setBackground(Color.white);
         buttonPane.add(bViewList);
         bViewList.addActionListener(new ActionListener() {
             @Override
@@ -64,8 +46,20 @@ public class MainGUI extends JFrame{
             	bViewList_actionPerformed(e);
             }
         });
-        bStudentRecord = new JButton("Student Record");
-        bStudentRecord.setBackground(Color.CYAN);
+        
+        bTakeAbsence = new JButton("Take Absence");
+        bTakeAbsence.setBackground(Color.LIGHT_GRAY);
+        buttonPane.add(bTakeAbsence);
+        bTakeAbsence.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	dispose();
+            	bTakeAbsence_actionPerformed(e);
+            }
+        });
+        
+        bStudentRecord = new JButton("Search For Specific Student");
+        bStudentRecord.setBackground(Color.white);
         buttonPane.add(bStudentRecord);
         bStudentRecord.addActionListener(new ActionListener() {
             @Override
@@ -75,7 +69,7 @@ public class MainGUI extends JFrame{
             }
         });
         bExit = new JButton("Exit");
-        bExit.setBackground(Color.GRAY);
+        bExit.setBackground(Color.LIGHT_GRAY);
         buttonPane.add(bExit);
         mainGuiPane = new JPanel();
         mainGuiPane.add(buttonPane, BorderLayout.CENTER);
@@ -92,12 +86,11 @@ public class MainGUI extends JFrame{
     private void bTakeAbsence_actionPerformed(ActionEvent e) {
       	JFrame takeAbsenceFrame = new TakeAbsenceGUI();
         takeAbsenceFrame.pack();
+        takeAbsenceFrame.setLocationRelativeTo(null);
         takeAbsenceFrame.setVisible(true);
     }
 
     public void bStudentList_actionPerformed(ActionEvent e){
-
-
         JFrame unitGui = new UnitGUI();
         unitGui.pack();
         unitGui.setLocationRelativeTo(null);
@@ -113,13 +106,6 @@ public class MainGUI extends JFrame{
     
     public void bStudentRecord_actionPerformed(ActionEvent e){
         JFrame unitGui  = new StudentRecordGUI();
-        unitGui.pack();
-        unitGui.setLocationRelativeTo(null);
-        unitGui.setVisible(true);
-    }
-    
-    public void bExit_actionPerformed(ActionEvent e){
-        JFrame unitGui  = new JFrame();
         unitGui.pack();
         unitGui.setLocationRelativeTo(null);
         unitGui.setVisible(true);
