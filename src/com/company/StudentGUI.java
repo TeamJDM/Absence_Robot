@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 public class StudentGUI extends JFrame{
 
-
+	private JFrame thisFrame;
     private JPanel contentPane;
     private JPanel detailsPane;
     private JPanel buttonPane;
@@ -27,6 +27,8 @@ public class StudentGUI extends JFrame{
     private JLabel lEmail;
     private JLabel lYear;
     private JLabel lUnit;
+    private JLabel lTime;
+
 
     private JTextField tName;
     private JTextField tTel;
@@ -34,18 +36,16 @@ public class StudentGUI extends JFrame{
 
     private JButton bAdd;
     private JButton bFinish;
-    private JButton jLoad;
-    private JButton bBack;
+    //private JButton jLoad;
+    private JButton bDone;
 
     private StudentList studentList;
 
-    public StudentGUI(int year, Unit unit){
+    public StudentGUI( Unit unit){
 
+    	thisFrame = this;
         contentPane = (JPanel)this.getContentPane();
-        studentList = new StudentList(year, unit);
-//        contentPane = (JPanel)this.getContentPane();
-//        this.setTitle("Add Student");
-        //contentPane.setPreferredSize(new Dimension(450,200));
+        studentList = new StudentList( unit);
         this.setTitle("Add Student");
 
         detailsPane = new JPanel();
@@ -70,7 +70,18 @@ public class StudentGUI extends JFrame{
         bAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bAdd_actionPerformed(e);
+                try{
+                	tName.getText();
+                	tTel.getText();
+                	tEmail.getText();
+                	bAdd_actionPerformed(e);
+                }
+                catch (NumberFormatException wi) {
+            		JOptionPane.showMessageDialog(null, "You need to specify tel with numbers", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            	}
+                catch(Exception ex){
+                	JOptionPane.showMessageDialog(null, "You need to specify the name, tel and email of new student", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         buttonPane.add(bAdd);
@@ -83,51 +94,34 @@ public class StudentGUI extends JFrame{
             }
         });
         buttonPane.add(bFinish);
-        jLoad = new JButton("Load");
-        jLoad.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                bLoad_actionPerformed(e);
-            }
-        });
-        buttonPane.add(jLoad);
         
-        bBack = new JButton("Back");
-        bBack.addActionListener(new ActionListener() {
+        bDone = new JButton("Done");
+        bDone.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	dispose();
-            	com.company.UnitGUI mg = new UnitGUI();
+            	
+            	MainGUI mg = new MainGUI();
+            	//mg.setLocation();
             	mg.pack();
             	mg.setVisible(true);
-            	
+            	dispose();
             }
         });
-        buttonPane.add(bBack);
+        buttonPane.add(bDone);
 
         infoPane = new JPanel();
         infoPane.setLayout(new FlowLayout());
-        lYear = new JLabel(String.valueOf(year));
-        infoPane.add(lYear);
+        
         lUnit = new JLabel(unit.getUnitName());
         infoPane.add(lUnit);
+       // infoPane.add(lTime);
 
         contentPane.add(infoPane, BorderLayout.NORTH);
         contentPane.add(buttonPane, BorderLayout.SOUTH);
         contentPane.add(detailsPane, BorderLayout.CENTER);
-
-
-    }
-
-    private void bLoad_actionPerformed(ActionEvent e) {
-
     }
 
     private void bFinish_actionPerformed(ActionEvent e) {
-
-//        for (Student s: studentList.getArrayOfStudents()){
-//            studentList.addStudent(s);
-//        }
 
         try{
             FileOutputStream saveFile = new FileOutputStream("saveFile_" + this.lUnit.getText()+ ".dat");
@@ -143,7 +137,6 @@ public class StudentGUI extends JFrame{
         }
     }
 
-
     public void bAdd_actionPerformed(ActionEvent e) {
 
         this.studentList.addStudent(new Student(this.tName.getText(), Integer.parseInt(this.tTel.getText()), this.tEmail.getText()));
@@ -151,7 +144,5 @@ public class StudentGUI extends JFrame{
         this.tName.setText("");
         this.tTel.setText("");
         this.tEmail.setText("");
-
-
     }
 }
