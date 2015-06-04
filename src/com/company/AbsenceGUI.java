@@ -5,13 +5,16 @@
  */
 package com.company;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
 import java.util.ArrayList;
 import javax.swing.table.*;
 
-/**
- *
- * @author Dimos
- */
 public class AbsenceGUI extends javax.swing.JFrame {
 
     TableModel model;
@@ -155,3 +158,4 @@ public class AbsenceGUI extends javax.swing.JFrame {
         jTable1.setModel(model);
     }
 }
+
