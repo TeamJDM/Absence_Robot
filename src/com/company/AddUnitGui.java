@@ -1,14 +1,12 @@
 package com.company;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-/**
- * Created by Dimos on 6/1/15.
- */
 public class AddUnitGui extends JFrame{
 
     private JLabel lUnitName;
@@ -18,7 +16,7 @@ public class AddUnitGui extends JFrame{
     private JTextField tProfName;
     private JTextField tAbsences;
     private JButton bAdd;
-    private JButton bFinish;
+    private JButton bDone;
 
     private JPanel contentPane;
     private JPanel infoPane;
@@ -51,11 +49,19 @@ public class AddUnitGui extends JFrame{
         bAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                units.addUnit(new Unit(tUnitName.getText(), tProfName.getText(),Integer.parseInt(tAbsences.getText())));
+                try{
+            	units.addUnit(new Unit(tUnitName.getText(), tProfName.getText(),Integer.parseInt(tAbsences.getText())));
                 tUnitName.setText("");
                 tProfName.setText("");
                 tAbsences.setText("");
-
+                }
+                catch (IllegalArgumentException wi) {
+            		JOptionPane.showMessageDialog(null, "You need to specify Absences with numbers and unit and professor's name as a string", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            	}
+            	catch (Exception wi2){
+            		JOptionPane.showMessageDialog(null, "You need to fill out all columns ", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            	}
+                
                 try {
                     FileOutputStream saveFile = new FileOutputStream("units.dat");
                     ObjectOutputStream save = new ObjectOutputStream(saveFile);
@@ -70,17 +76,18 @@ public class AddUnitGui extends JFrame{
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
         buttonPane.add(bAdd);
-        bFinish = new JButton("Finish");
-        bFinish.addActionListener(new ActionListener() {
+        bDone = new JButton("Done");
+        bDone.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 JFrame unitFrame = new UnitGUI();
                 unitFrame.pack();
+                unitFrame.setLocationRelativeTo(null);
                 unitFrame.setVisible(true);
             }
         });
-        buttonPane.add(bFinish);
+        buttonPane.add(bDone);
         contentPane.add(infoPane, BorderLayout.CENTER);
         contentPane.add(buttonPane, BorderLayout.SOUTH);
 
@@ -98,5 +105,5 @@ public class AddUnitGui extends JFrame{
             ex.printStackTrace();
         }
     }
-
 }
+
