@@ -1,8 +1,9 @@
 package com.company;
 
 import javax.sql.rowset.serial.SerialArray;
+import java.sql.Time;
+import java.util.Date;
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,16 +14,17 @@ import java.util.jar.JarFile;
 
 public class UnitGUI extends JFrame{
 
-    //private JPanel contentPaneRoot;
     private JPanel contentPane;
     private JPanel detailsPane;
     private JPanel buttonPane;
     private JPanel studentGUIPane;
 
+    private JLabel lUnit;
     private JComboBox jComboBox;
-    private JLabel lYear;
+    //private JLabel lYear;
     private JTextField tfYear;
-    private JButton bOk;
+    
+    private JButton bConfirm;
     private JButton bBack;
     private JButton bAddUnit;
     private JButton bDeleteUnit;
@@ -46,7 +48,7 @@ public class UnitGUI extends JFrame{
 //            ex.printStackTrace();
 //        }
 
-        try {
+    	try {
             FileInputStream saveFile = new FileInputStream("units.dat");
             ObjectInputStream save = new ObjectInputStream(saveFile);
             this.units = (UnitList) save.readObject();
@@ -81,32 +83,44 @@ public class UnitGUI extends JFrame{
             ex.printStackTrace();
         }
 
-
         contentPane = (JPanel)this.getContentPane();
-        //contentPane.setPreferredSize(new Dimension(800,600));
-        this.setTitle("Choose Unit to create a Student List");
+        this.setTitle("Choose Unit to create a Student class");
 
         detailsPane = new JPanel();
-        detailsPane.setLayout(new GridLayout(2,2));
-        lYear = new JLabel("Year:");
-        detailsPane.add(lYear);
-        tfYear = new JTextField();
-        detailsPane.add(tfYear);
+        detailsPane.setLayout(new GridLayout(1,2));
+        //lYear = new JLabel("Year:");
+        //detailsPane.add(lYear);
+        //tfYear = new JTextField();
+        //detailsPane.add(tfYear);
+        lUnit = new JLabel("Unit:");
+        detailsPane.add(lUnit);
         jComboBox = new JComboBox();
         for (Unit uni: units.getUnits()){
             jComboBox.addItem(uni.getUnitName());
         }
         detailsPane.add(jComboBox);
+        jComboBox.setSelectedIndex(-1);
+        
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
-        bOk = new JButton("OK");
-        bOk.addActionListener(new ActionListener() {
+        bConfirm = new JButton("Confirm");
+        bConfirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bOk_actionPerformed(e);
+            	//bConfirm_actionPerformed(e);
+            	try {
+            	    
+            	     bConfirm_actionPerformed(e);
+            	}
+            	catch (NumberFormatException wi) {
+            		JOptionPane.showMessageDialog(null, "You need to specify Year with numbers", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            	}
+            	catch (NullPointerException wi){
+            		JOptionPane.showMessageDialog(null, "You need to select the specific unit", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            	}
             }
         });
-        buttonPane.add(bOk);
+        buttonPane.add(bConfirm);
         
         bBack = new JButton("Back");
         bBack.addActionListener(new ActionListener() {
@@ -114,24 +128,26 @@ public class UnitGUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
             	dispose();
             	MainGUI mg = new MainGUI();
+            	mg.setLocationRelativeTo(null);
             	mg.pack();
-            	mg.setVisible(true);
-            	
+            	mg.setVisible(true);	
             }
         });
         buttonPane.add(bBack);
-        bAddUnit = new JButton("Add Unit");
+        
+        bAddUnit = new JButton("Add New Unit");
         bAddUnit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 JFrame addFrame = new AddUnitGui();
                 addFrame.pack();
+                addFrame.setLocationRelativeTo(null);
                 addFrame.setVisible(true);
-
             }
         });
         buttonPane.add(bAddUnit);
+        
         bDeleteUnit = new JButton("Delete Unit");
         bDeleteUnit.addActionListener(new ActionListener() {
             @Override
@@ -172,7 +188,7 @@ public class UnitGUI extends JFrame{
 
     }
 
-    private void bOk_actionPerformed(ActionEvent e) {
+    private void bConfirm_actionPerformed(ActionEvent e) {
 //        StudentList studentList = new StudentList(Integer.parseInt(this.tfYear.getText()));
 //        try{
 //            FileOutputStream saveFile = new FileOutputStream("saveFile_" + this.jComboBox.getSelectedItem().toString() + ".dat");
@@ -187,19 +203,18 @@ public class UnitGUI extends JFrame{
 //            ex.printStackTrace();
 //        }
         //StudentList list = new StudentList(Integer.parseInt(this.tfYear.getText()));
-        for (Unit u: units.getUnits()){
-            if (u.getUnitName().equals(jComboBox.getSelectedItem().toString()))
-                selectedUnit = u;
-        }
-    	JFrame studentFrame = new StudentGUI(Integer.parseInt(this.tfYear.getText()),selectedUnit);
+    	for (Unit u: units.getUnits()){
+    		if (u.getUnitName().equals(jComboBox.getSelectedItem().toString()))
+    			selectedUnit = u;
+    	}
+            
+        
+    	JFrame studentFrame = new StudentGUI(selectedUnit);
         studentFrame.pack();
         studentFrame.setVisible(true);
-
-
-
+        studentFrame.setLocationRelativeTo(null);
         dispose();
-
+        //studentFrame.setLocationRelativeTo(null);
+        
     }
-
-
 }
