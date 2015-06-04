@@ -43,15 +43,14 @@ public class TakeAbsenceGUI extends JFrame{
     private JLabel lProfessor;
     //private JLabel lYear;
     
-    private JLabel lYear;
-    private JTextField tfYear;
+    private JLabel lClassRoom;
+    private JComboBox cClasses;
     private JLabel lDate;
-    private JTextField tfDate;
+    private JLabel tfDate;
     private JLabel lTime;
-    private JTextField tfTime;
+    private JLabel tfTime;
     private JLabel lShowUnit;
     private JLabel lShowProf;
-    private JLabel lShowYear;
 
     private Date date;
 
@@ -77,25 +76,37 @@ public class TakeAbsenceGUI extends JFrame{
 
 
         contentPane = (JPanel) this.getContentPane();
-        contentPane.setPreferredSize(new Dimension(300,200));
+        //contentPane.setPreferredSize(new Dimension(300,200));
         tablePane = new JPanel();
 
         
         this.setTitle("Take Absences");
 
         infoPanel = new JPanel();
-        infoPanel.setLayout(new GridLayout(2,1));
+        infoPanel.setLayout(new GridLayout(2,2));
 
         JLabel lUnitsChoose = new JLabel("Please choose a unit to Take Absences");
         infoPanel.add(lUnitsChoose);
         unitsBox = new JComboBox();
+        cClasses = new JComboBox();
         for (Unit u: units.getUnits()){
             unitsBox.addItem(u.getUnitName());
         }
         infoPanel.add(unitsBox);
         unitsBox.setSelectedIndex(-1);
-        
-        
+
+        cClasses.addItem("L1");
+        cClasses.addItem("L3-L4");
+        cClasses.addItem("L5");
+        cClasses.addItem("L6");
+        cClasses.addItem("Rodoula");
+        cClasses.addItem("ETHRA");
+        cClasses.addItem("TALIS");
+        cClasses.addItem("MP Room");
+
+        infoPanel.add(new JLabel("Choose a Classroom: "));
+        infoPanel.add(cClasses);
+        cClasses.setSelectedIndex(-1);
        
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
@@ -149,19 +160,17 @@ public class TakeAbsenceGUI extends JFrame{
 
         for (JCheckBox jChB: checkBoxes){
             if (jChB.isSelected()){
-                try {
-                    //absentStudents.add(studentList.getStudentById(Integer.parseInt(studentList.getNameList().get(Integer.parseInt(jChB.ge))));
-                    absentStudents.add(studentList.getStudentById(Integer.parseInt(jChB.getText())));
 
-                } catch (NoStudentException e1) {
-                    e1.printStackTrace();
-                }
+                    //absentStudents.add(studentList.getStudentById(Integer.parseInt(studentList.getNameList().get(Integer.parseInt(jChB.ge))));
+                absentStudents.add(studentList.getStudentById(Integer.parseInt(jChB.getText())));
+
+
             }
         }
         for (Student stud : studentList.getArrayOfStudents()) {
             if (absentStudents.contains(stud)) {
                 if (stud.checkAbsenceLimit(this.unitsBox.getSelectedItem().toString()) < 7){
-                    stud.addAbsence(new Absence(date.toString(), studentList.getUnit()));
+                    stud.addAbsence(new Absence(date.toString(), studentList.getUnit(), cClasses.getSelectedItem().toString()));
 
                 }
 
@@ -218,7 +227,7 @@ public class TakeAbsenceGUI extends JFrame{
         }
 
         infoPanel.removeAll();
-        infoPanel.setLayout(new GridLayout(3,3));
+        infoPanel.setLayout(new GridLayout(4,4));
         //lYear = new JLabel("Year:");
         //lShowYear = new JLabel(String.valueOf(studentList.getYear()));
         lUnit = new JLabel("Unit:");
@@ -227,17 +236,20 @@ public class TakeAbsenceGUI extends JFrame{
         lShowProf = new JLabel(studentList.getUnit().getProfName());
         infoPanel.add(lUnit);
         infoPanel.add(lShowUnit);
-        infoPanel.add(lYear);
-        infoPanel.add(lShowYear);
+
         infoPanel.add(lProfessor);
         infoPanel.add(lShowProf);
-        infoPanel.add(new JLabel("Date"));
+        infoPanel.add(new JLabel("Date & Time: "));
         infoPanel.add(new JLabel(String.valueOf(date)));
-        //contentPane.remove(tablePane);
+        infoPanel.add(new JLabel("Classroom: "));
+        infoPanel.add(new JLabel(cClasses.getSelectedItem().toString()));
+
         contentPane.add(tablePane, BorderLayout.CENTER);
         contentPane.add(infoPanel, BorderLayout.NORTH);
-        contentPane.revalidate();
-        contentPane.repaint();
+        this.pack();
+
+//        contentPane.revalidate();
+//        contentPane.repaint();
 
 
     }

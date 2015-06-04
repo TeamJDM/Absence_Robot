@@ -144,11 +144,7 @@ public class UnitGUI extends JFrame{
                 addFrame.pack();
                 addFrame.setLocationRelativeTo(null);
                 addFrame.setVisible(true);
-<<<<<<< Updated upstream
-=======
-                
 
->>>>>>> Stashed changes
             }
         });
         buttonPane.add(bAddUnit);

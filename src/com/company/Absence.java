@@ -10,14 +10,14 @@ import java.util.Date;
 public class Absence implements Serializable{
 
     private String date;
-    //private Time time;
     private Unit unit;
+    private String clroom;
 
-    public Absence(String date, Unit unit){
+    public Absence(String date, Unit unit, String classroom){
 
         this.date = date;
-        //this.time = time;
         this.unit = unit;
+        this.clroom = classroom;
     }
 
 

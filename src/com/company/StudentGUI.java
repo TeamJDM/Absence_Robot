@@ -45,15 +45,15 @@ public class StudentGUI extends JFrame{
 
     	thisFrame = this;
         contentPane = (JPanel)this.getContentPane();
-<<<<<<< Updated upstream
+
         studentList = new StudentList( unit);
-=======
-        studentList = new StudentList(year, unit);
+
+        studentList = new StudentList( unit);
 //        contentPane = (JPanel)this.getContentPane();
 //        this.setTitle("Add Student");
         //contentPane.setPreferredSize(new Dimension(450,200));
         this.setSize(500,this.getHeight());
->>>>>>> Stashed changes
+
         this.setTitle("Add Student");
 
         detailsPane = new JPanel();
@@ -94,7 +94,7 @@ public class StudentGUI extends JFrame{
         });
         buttonPane.add(bAdd);
         
-        bFinish = new JButton("Finish");
+        bFinish = new JButton("Save List & Finish");
         bFinish.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,20 +102,7 @@ public class StudentGUI extends JFrame{
             }
         });
         buttonPane.add(bFinish);
-        
-        bDone = new JButton("Done");
-        bDone.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	
-            	MainGUI mg = new MainGUI();
-            	//mg.setLocation();
-            	mg.pack();
-            	mg.setVisible(true);
-            	dispose();
-            }
-        });
-        buttonPane.add(bDone);
+
 
         infoPane = new JPanel();
         infoPane.setLayout(new FlowLayout());
@@ -143,6 +130,12 @@ public class StudentGUI extends JFrame{
         catch (IOException ex){
             ex.printStackTrace();
         }
+
+        MainGUI mg = new MainGUI();
+        //mg.setLocation();
+        mg.pack();
+        mg.setVisible(true);
+        dispose();
     }
 
     public void bAdd_actionPerformed(ActionEvent e) {

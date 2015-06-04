@@ -5,7 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.nio.files.Paths;
+import java.nio.file.Paths;
+//import java.nio.files.Paths;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -94,8 +96,7 @@ public class StudentRecordGUI extends JFrame{
                 ex.printStackTrace();
             }
         }
-<<<<<<< Updated upstream
-=======
+
 
 
 
@@ -105,38 +106,50 @@ public class StudentRecordGUI extends JFrame{
         unitGui.pack();
         unitGui.setLocationRelativeTo(null);
         unitGui.setVisible(true);
->>>>>>> Stashed changes
+
     }
     public void bSearch_actionPerformed(ActionEvent e){
         JPanel showPane = new JPanel();
+        JPanel infoStudentPne = new JPanel();
+        infoStudentPne.setLayout(new GridLayout(2,2));
+
         DefaultTableModel model = new DefaultTableModel();
         JTable table = new JTable(model);
         model.addColumn("Unit Name");
-        model.addColumn("Student ID");
-        model.addColumn("Student Name");
+        //model.addColumn("Student ID");
+        //model.addColumn("Student Name");
         model.addColumn("Student Absences");
         model.addColumn("Absences Permitted");
+        String name = null;
+        int id = 0;
         for (StudentList sl: studentLists){
             for (Student s: sl.getArrayOfStudents()){
                 if (tName.getText().equals(s.getName())){
 
+                    name = s.getName();
+                    id = s.getId();
 //                    showPane.add(new JLabel(sl.getUnit().getUnitName()));
 //                    showPane.add(new JLabel(String.valueOf(s.getId())));
 //                    showPane.add(new JLabel(s.getName()));
 //                    showPane.add(new JLabel(String.valueOf(s.checkAbsenceLimit(sl.getUnit().getUnitName()))));
 //                    showPane.add(new JLabel(String.valueOf(sl.getUnit().getAbsencesPermitted())));
-                    model.addRow(new Object[]{sl.getUnit().getUnitName(),String.valueOf(s.getId()),s.getName(),s.checkAbsenceLimit(sl.getUnit().getUnitName()),sl.getUnit().getAbsencesPermitted()});
+                    model.addRow(new Object[]{sl.getUnit().getUnitName(),s.checkAbsenceLimit(sl.getUnit().getUnitName()),sl.getUnit().getAbsencesPermitted()});
                 }
             }
         }
+        infoStudentPne.add(new JLabel("ID: "));
+        infoStudentPne.add(new JLabel(String.valueOf(id)));
+        infoStudentPne.add(new JLabel("Name: "));
+        infoStudentPne.add(new JLabel(name));
         contentPane.remove(detailsPane);
+        contentPane.add(infoStudentPne, BorderLayout.NORTH);
         contentPane.add(table, BorderLayout.CENTER);
         contentPane.repaint();
-<<<<<<< Updated upstream
+
     }    
-=======
-        this.pack();
-    }
-    
->>>>>>> Stashed changes
+
+        //this.pack();
 }
+    
+
+

@@ -58,13 +58,14 @@ public class StudentList implements Serializable {
         return names;
     }
 
-    public Student getStudentById(int id) throws NoStudentException{
+    public Student getStudentById(int id){
         for (Student s: studentList){
             if (s.getId() == id){
                 return s;
             }
         }
-        throw new NoStudentException("No student found with this ID");
+
+        return null;
     }
 
     public ArrayList<Student> getArrayOfStudents(){
