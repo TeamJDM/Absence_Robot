@@ -55,9 +55,9 @@ public class ViewListGUI extends JFrame {
         }
 
         contentPane = (JPanel) this.getContentPane();
-        contentPane.setPreferredSize(new Dimension(400, 200));
+        //contentPane.setPreferredSize(new Dimension(400, 200));
         tablePane = new JPanel();
-        this.setTitle("View List");
+        this.setTitle("Look at the created Student Classes");
 
         infoPanel = new JPanel();
         infoPanel.setLayout(new FlowLayout());
@@ -76,7 +76,7 @@ public class ViewListGUI extends JFrame {
 
         buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout());
-        bAdd = new JButton("Add");
+        bAdd = new JButton("Add Students");
         bAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,8 +102,12 @@ public class ViewListGUI extends JFrame {
                 int result = JOptionPane.showConfirmDialog(null, inputDialog,
                         "Please Enter New Students Info", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
-                    studentList.addStudent(new Student(tName.getText(), Integer.parseInt(tTel.getText()), tEmail.getText()));
-
+                    try{
+                    	studentList.addStudent(new Student(tName.getText(), Integer.parseInt(tTel.getText()), tEmail.getText()));
+                    }
+                    catch(Exception ex){
+                    	JOptionPane.showMessageDialog(null,"Specify student name and email with letters and telephone with numbers."+ "\n" + "Try again by adding students button", "ATTENTION !!!", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
                 try {
                     FileOutputStream saveFile = new FileOutputStream("saveFile_" + unitsBox.getSelectedItem().toString() + ".dat");
@@ -162,7 +166,7 @@ public class ViewListGUI extends JFrame {
         });
 
 
-        bDelete = new JButton("Delete");
+        bDelete = new JButton("Delete Students");
         bDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -209,6 +213,7 @@ public class ViewListGUI extends JFrame {
                 tablePane.add(new JLabel("Absences"));
                 tablePane.add(new JLabel("Ansences Permitted"));
                 int i = 0;
+                checkBoxes.clear();
                 for (Student si : studentList.getArrayOfStudents()) {
                     checkBoxes.add(new JCheckBox(String.valueOf(si.getId()), false));
                     tablePane.add(checkBoxes.get(i));
@@ -257,14 +262,6 @@ public class ViewListGUI extends JFrame {
             this.studentList = (StudentList) save.readObject();
             save.close();
 
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
         tablePane.setLayout(new GridLayout(studentList.getNameList().size()+1, 4));
         tablePane.add(new JLabel("ID"));
         tablePane.add(new JLabel("Name"));
@@ -280,6 +277,14 @@ public class ViewListGUI extends JFrame {
 
             i++;
         }
+        catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "The unit that you chose does not have created student class."+"\n " + "Try another unit or add students here.", "ATTENTION !!!", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
         buttonPane.add(bAdd);
         buttonPane.add(bDelete);
 
