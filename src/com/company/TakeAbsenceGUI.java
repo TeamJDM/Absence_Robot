@@ -114,13 +114,12 @@ public class TakeAbsenceGUI extends JFrame{
         bLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
-                	unitsBox.getSelectedIndex();
+                if(unitsBox.getSelectedItem() != null) {
                 	bLoad_actionPerformed(e);
                 }
-                catch(Exception ex){
-                	JOptionPane.showMessageDialog(null, "You need to select the specific unit", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
-                }
+                else{
+                	JOptionPane.showMessageDialog(null, "Please select the unit", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+               	}
             }
         });
         buttonPane.add(bLoad);
@@ -207,7 +206,7 @@ public class TakeAbsenceGUI extends JFrame{
             save.close();
 
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "The unit that you chose does not have students in it. Please add students in this unit if you want to take absences.", "ATTENTION !!!", JOptionPane.ERROR_MESSAGE);            
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
