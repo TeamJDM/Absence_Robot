@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 public class StudentGUI extends JFrame{
 
-    private JFrame thisFrame;
+	private JFrame thisFrame;
     private JPanel contentPane;
     private JPanel detailsPane;
     private JPanel buttonPane;
@@ -45,9 +45,6 @@ public class StudentGUI extends JFrame{
 
     	thisFrame = this;
         contentPane = (JPanel)this.getContentPane();
-
-        studentList = new StudentList( unit);
-
         studentList = new StudentList( unit);
 //        contentPane = (JPanel)this.getContentPane();
 //        this.setTitle("Add Student");
@@ -85,7 +82,7 @@ public class StudentGUI extends JFrame{
                 			bAdd_actionPerformed(e);
                 		}
                 		else{
-                			JOptionPane.showMessageDialog(null, "Please provide studnet email", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+                			JOptionPane.showMessageDialog(null, "Please provide student email", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
                 		}
                 	}
                 	else{
@@ -98,6 +95,7 @@ public class StudentGUI extends JFrame{
                 catch (NullPointerException wi){
             		JOptionPane.showMessageDialog(null, "You need to select telephone number", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
             	}
+                
             }
         });
         buttonPane.add(bAdd);
@@ -140,16 +138,16 @@ public class StudentGUI extends JFrame{
         }
 
         MainGUI mg = new MainGUI();
-        //mg.setLocation();
+        mg.setLocationRelativeTo(null);
         mg.pack();
         mg.setVisible(true);
         dispose();
     }
 
     public void bAdd_actionPerformed(ActionEvent e) {
-
+	
         this.studentList.addStudent(new Student(this.tName.getText(), Integer.parseInt(this.tTel.getText()), this.tEmail.getText()));
-
+ 
         this.tName.setText("");
         this.tTel.setText("");
         this.tEmail.setText("");
