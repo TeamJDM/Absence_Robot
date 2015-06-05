@@ -26,7 +26,7 @@ public class Student implements Serializable {
         this.name = name;
         this.tel = tel;
         this.email = email;
-        this.id = setId();
+        //this.id = setId();
         absences = new ArrayList<Absence>();
 
     }
@@ -86,15 +86,9 @@ public class Student implements Serializable {
     public void deleteAbsence(Absence absence){
         absences.remove(absence);
     }
-
-    /**
-     * Sets randomly the id attribute with a number from 10000 to 20000
-     * @return an integer from 10000 to 20000
-     * @see Random
-     */
+    
     protected int setId(){
-        Random r = new Random( System.currentTimeMillis() );
-        return 10000 + r.nextInt(20000);
+        id=studentId;
     }
 
     /**
