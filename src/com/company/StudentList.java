@@ -19,14 +19,29 @@ public class StudentList implements Serializable {
     }
 
     public void addStudent(Student s){
-        if (studentList.contains(s))
-            System.out.println("Already in the list");
-        else {
-            studentList.add(s);
-            numberOfStudents++;
-        }
+        boolean alreadyExists = true;
+    	int nextId=0;
+    	while(!alreadyExists){
+    		nextId=getNextId();
+    		alreadyExists = false;
+	        for (int i = 0; i < studentList.size(); ++i) {
+	        	if (studentList.get(i).getId() == nextId) {
+	        		alreadyExists = true;
+	        	}
+	        }
+    	}
+        s.setId(nextId);
+        System.out.println(s.getId());
+        studentList.add(s);
+        numberOfStudents++;
+        
     }
-
+    
+    protected int getNextId(){
+        Random r = new Random( System.currentTimeMillis() );
+        return 10000 + r.nextInt(20000);
+    }
+    
     public void deleteStudent(Student s){
         if (studentList.contains(s)) {
             studentList.remove(s);
