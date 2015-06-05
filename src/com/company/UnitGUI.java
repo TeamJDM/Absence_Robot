@@ -55,11 +55,10 @@ public class UnitGUI extends JFrame{
             save.close();
 
         } catch (FileNotFoundException ex) {
-            int res = JOptionPane.showConfirmDialog(null, "Do you want to create it?", "File Missing", JOptionPane.OK_CANCEL_OPTION);
 
-            if (res == JOptionPane.OK_OPTION){
                 units = new UnitList();
                 try {
+                    dispose();
                     FileOutputStream saveFile = new FileOutputStream("units.dat");
                     ObjectOutputStream save = new ObjectOutputStream(saveFile);
                     save.writeObject(units);
@@ -71,10 +70,10 @@ public class UnitGUI extends JFrame{
                     ex.printStackTrace();
                 }
 
-                dispose();
-                JFrame back = new MainGUI();
-                back.pack();
-                back.setVisible(true);
+                //dispose();
+                //JFrame back = new MainGUI();
+                //back.pack();
+                //back.setVisible(true);
             }
 
         } catch (IOException ex) {
@@ -112,9 +111,9 @@ public class UnitGUI extends JFrame{
             	    
             	     bConfirm_actionPerformed(e);
             	}
-            	catch (NumberFormatException wi) {
-            		JOptionPane.showMessageDialog(null, "You need to specify Year with numbers", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
-            	}
+            	//catch (NumberFormatException wi) {
+            	//	JOptionPane.showMessageDialog(null, "You need to specify Year with numbers", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            	//}
             	catch (NullPointerException wi){
             		JOptionPane.showMessageDialog(null, "You need to select the specific unit", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
             	}
