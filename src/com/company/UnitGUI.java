@@ -1,9 +1,10 @@
 package com.company;
-
 import javax.sql.rowset.serial.SerialArray;
+
 import java.sql.Time;
 import java.util.Date;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,34 +48,34 @@ public class UnitGUI extends JFrame{
 //        } catch (IOException ex) {
 //            ex.printStackTrace();
 //        }
-
+    	
     	try {
-            FileInputStream saveFile = new FileInputStream("units.dat");
+    		FileInputStream saveFile = new FileInputStream("units.dat");
             ObjectInputStream save = new ObjectInputStream(saveFile);
             this.units = (UnitList) save.readObject();
             save.close();
-
-        } catch (FileNotFoundException ex) {
-
-                units = new UnitList();
+    		}
+        	catch (FileNotFoundException ex) {
+            
+        		units = new UnitList();
                 try {
                     dispose();
-                    FileOutputStream saveFile = new FileOutputStream("units.dat");
+                	
+                	FileOutputStream saveFile = new FileOutputStream("units.dat");
                     ObjectOutputStream save = new ObjectOutputStream(saveFile);
                     save.writeObject(units);
                     save.close();
-
-                } catch (FileNotFoundException ex2) {
-                    ex.printStackTrace();
-                } catch (IOException ex2) {
+                }
+                catch (FileNotFoundException ex2) {
                     ex.printStackTrace();
                 }
-
+                catch (IOException ex2) {
+                    ex.printStackTrace();
+                }
                 //dispose();
                 //JFrame back = new MainGUI();
                 //back.pack();
                 //back.setVisible(true);
-            }
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -107,13 +108,9 @@ public class UnitGUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
             	//bConfirm_actionPerformed(e);
-            	try {
-            	    
+            	try {   
             	     bConfirm_actionPerformed(e);
             	}
-            	//catch (NumberFormatException wi) {
-            	//	JOptionPane.showMessageDialog(null, "You need to specify Year with numbers", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
-            	//}
             	catch (NullPointerException wi){
             		JOptionPane.showMessageDialog(null, "You need to select the specific unit", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
             	}
