@@ -32,18 +32,23 @@ public class MainGUI extends JFrame{
         bStudentList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	dispose();
-            	bStudentList_actionPerformed(e);
+            		dispose();
+            		bStudentList_actionPerformed(e);
             }
         });
-        bViewList = new JButton("Review Student Class");
+        bViewList = new JButton("Look at Student Class for Specific Units");
         bViewList.setBackground(Color.white);
         buttonPane.add(bViewList);
         bViewList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	dispose();
-            	bViewList_actionPerformed(e);
+            	try{	
+            		bViewList_actionPerformed(e);
+            		dispose();
+            	}
+            	catch(Exception ex){
+            		JOptionPane.showMessageDialog(null, "First you have to create new student class", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            	}
             }
         });
         
@@ -53,8 +58,13 @@ public class MainGUI extends JFrame{
         bTakeAbsence.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	dispose();
-            	bTakeAbsence_actionPerformed(e);
+            	try{
+            		bTakeAbsence_actionPerformed(e);
+            		dispose();
+            	}
+            	catch(Exception ex){
+            		JOptionPane.showMessageDialog(null, "First you have to create new student class", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            	}
             }
         });
         
@@ -64,8 +74,13 @@ public class MainGUI extends JFrame{
         bStudentRecord.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	dispose();
-            	bStudentRecord_actionPerformed(e);
+            	try{	
+            		bStudentRecord_actionPerformed(e);
+            		dispose();
+            	}
+            	catch(Exception ex){
+            		JOptionPane.showMessageDialog(null, "First you have to create new student class", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            	}
             }
         });
         bExit = new JButton("Exit");
