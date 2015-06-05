@@ -20,8 +20,8 @@ public class StudentList implements Serializable {
 
     public void addStudent(Student s){
         boolean alreadyExists = true;
-    	int nextId=0;
-    	while(!alreadyExists){
+    	int nextId=getNextId();
+    	while(alreadyExists){
     		nextId=getNextId();
     		alreadyExists = false;
 	        for (int i = 0; i < studentList.size(); ++i) {
