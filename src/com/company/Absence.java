@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
-/**
- * Created by Dimos on 5/13/15.
- */
 public class Absence implements Serializable{
 
     private String date;
@@ -41,8 +38,6 @@ public class Absence implements Serializable{
         this.date = date;
     }
 
-
-
     /**
      *
      * @return the unit object that the Absence has been taken to
@@ -58,6 +53,4 @@ public class Absence implements Serializable{
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
-
-
 }
