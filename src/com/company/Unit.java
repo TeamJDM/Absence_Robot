@@ -2,9 +2,6 @@ package com.company;
 
 import java.io.Serializable;
 
-/**
- * Created by Dimos on 5/11/15.
- */
 public class Unit implements Serializable{
 
     private String profName;
@@ -63,6 +60,8 @@ public class Unit implements Serializable{
     public int getAbsencesPermitted() {
         return absencesPermitted;
     }
-
-
+    
+    public void assignStudentList(StudentList listInput){
+        this.list = listInput;
+    }
 }
