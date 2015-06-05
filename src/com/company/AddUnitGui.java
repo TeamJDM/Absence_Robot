@@ -1,7 +1,5 @@
 package com.company;
-
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,9 +10,11 @@ public class AddUnitGui extends JFrame{
     private JLabel lUnitName;
     private JLabel lProfName;
     private JLabel lAbsences;
+    
     private JTextField tUnitName;
     private JTextField tProfName;
     private JTextField tAbsences;
+    
     private JButton bAdd;
     private JButton bDone;
 
@@ -50,9 +50,8 @@ public class AddUnitGui extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-            	//units.addUnit(new Unit(tUnitName.getText(), tProfName.getText(),Integer.parseInt(tAbsences.getText())));
                 	if(tUnitName.getText() != null && !tUnitName.getText().isEmpty()){
-                		if(tProfName.getText() != null && !tProfName.getText().isEmpty()){	
+                	    if(tProfName.getText() != null && !tProfName.getText().isEmpty()){	
                 			tAbsences.getText();
                 			bAdd_actionPerformed(e);
                 		}
@@ -122,4 +121,5 @@ public class AddUnitGui extends JFrame{
         tAbsences.setText("");
     }
 }
+
 
