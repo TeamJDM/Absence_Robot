@@ -125,7 +125,7 @@ public class StudentRecordGUI extends JFrame{
         for (StudentList sl: studentLists){
             for (Student s: sl.getArrayOfStudents()){
                 if (tName.getText().equals(s.getName())){
-                    firstId = s.getId();
+                    //firstId = s.getId();
                     name = s.getName();
                     id = s.getId();
 
