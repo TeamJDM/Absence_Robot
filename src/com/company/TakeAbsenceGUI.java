@@ -3,11 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package com.company;
-
+package com.company'
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,16 +16,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
-
-
 public class TakeAbsenceGUI extends JFrame{
 
     private StudentList studentList;
     private ArrayList<Student> absentStudents;
     private UnitList units;
-
-    //private DefaultTableModel tableModel;
-
+    
     private JPanel contentPane;
     private JPanel tablePane;
     private JPanel infoPanel;
@@ -41,7 +34,6 @@ public class TakeAbsenceGUI extends JFrame{
     private JButton bDone;
     private JLabel lUnit;
     private JLabel lProfessor;
-    //private JLabel lYear;
     
     private JLabel lClassRoom;
     private JComboBox cClasses;
@@ -67,7 +59,7 @@ public class TakeAbsenceGUI extends JFrame{
             save.close();
 
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+        	ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
@@ -114,12 +106,13 @@ public class TakeAbsenceGUI extends JFrame{
         bLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(unitsBox.getSelectedItem() != null) {
+                
+                if(unitsBox.getSelectedItem() != null & cClasses.getSelectedItem() !=null) {
                 	bLoad_actionPerformed(e);
                 }
                 else{
-                	JOptionPane.showMessageDialog(null, "Please select the unit", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
-               	}
+                	JOptionPane.showMessageDialog(null, "Please select the missing fields", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+               	}    
             }
         });
         buttonPane.add(bLoad);
@@ -127,8 +120,14 @@ public class TakeAbsenceGUI extends JFrame{
         bSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
-            	bSubmit_actionPerformed(e);
+                try{
+                	
+                	bSubmit_actionPerformed(e);
+                	dispose();
+                }
+                catch(NullPointerException ex){
+                	JOptionPane.showMessageDialog(null, "Wrong button! Please decide on unit and classroom fields and then load the class", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         buttonPane.add(bSubmit);
@@ -156,25 +155,23 @@ public class TakeAbsenceGUI extends JFrame{
     }
 
     private void bSubmit_actionPerformed(ActionEvent e) {
+    	
+    	for (JCheckBox jChB: checkBoxes){
+    		if (jChB.isSelected()){
+	            absentStudents.add(studentList.getStudentById(Integer.parseInt(jChB.getText())));
+	        }
+    		else{
+                JOptionPane.showMessageDialog(null,"Sorry ! You did not select any student to take absence for him/her. Try again", "ATTENTION !!!", JOptionPane.ERROR_MESSAGE);            
 
-        for (JCheckBox jChB: checkBoxes){
-            if (jChB.isSelected()){
-
-                    //absentStudents.add(studentList.getStudentById(Integer.parseInt(studentList.getNameList().get(Integer.parseInt(jChB.ge))));
-                absentStudents.add(studentList.getStudentById(Integer.parseInt(jChB.getText())));
-
-
-            }
-        }
-        for (Student stud : studentList.getArrayOfStudents()) {
-            if (absentStudents.contains(stud)) {
-                if (stud.checkAbsenceLimit(this.unitsBox.getSelectedItem().toString()) < 7){
-                    stud.addAbsence(new Absence(date.toString(), studentList.getUnit(), cClasses.getSelectedItem().toString()));
-
-                }
-
-            }
-        }
+    		}
+    	}
+	    for (Student stud : studentList.getArrayOfStudents()) {
+	    	if (absentStudents.contains(stud)) {
+	    		if (stud.checkAbsenceLimit(this.unitsBox.getSelectedItem().toString()) < 7){
+	    			stud.addAbsence(new Absence(date.toString(), studentList.getUnit(), cClasses.getSelectedItem().toString()));
+	            }	
+	        }
+	    }
         try{
             FileOutputStream saveFile = new FileOutputStream("saveFile_" + this.unitsBox.getSelectedItem().toString()+ ".dat");
             ObjectOutputStream save = new ObjectOutputStream(saveFile);
@@ -182,7 +179,7 @@ public class TakeAbsenceGUI extends JFrame{
             save.close();
         }
         catch (FileNotFoundException ex){
-            ex.printStackTrace();
+        	ex.printStackTrace();
         }
         catch (IOException ex){
             ex.printStackTrace();
@@ -246,12 +243,6 @@ public class TakeAbsenceGUI extends JFrame{
         contentPane.add(tablePane, BorderLayout.CENTER);
         contentPane.add(infoPanel, BorderLayout.NORTH);
         this.pack();
-
-//        contentPane.revalidate();
-//        contentPane.repaint();
-
-
+        bLoad.setVisible(false);
     }
-
-
 }
