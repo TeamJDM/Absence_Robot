@@ -1,297 +1,216 @@
 package com.company;
-
+import javax.sql.rowset.serial.SerialArray;
+import java.sql.Time;
+import java.util.Date;
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.*;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Date;
-import javax.swing.border.Border;
-import javax.swing.table.DefaultTableModel;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.jar.JarFile;
 
-public class ViewListGUI extends JFrame {
-
-
-    private StudentList studentList;
-    private UnitList unitList;
-
-
-    private ArrayList<JCheckBox> checkBoxes;
+public class UnitGUI extends JFrame{
 
     private JPanel contentPane;
-    private JPanel tablePane;
-    private JPanel infoPanel;
+    private JPanel detailsPane;
     private JPanel buttonPane;
+    private JPanel studentGUIPane;
 
+    private JLabel lUnit;
+    private JComboBox jComboBox;
+    //private JLabel lYear;
+    private JTextField tfYear;
+    
+    private JButton bConfirm;
+    private JButton bBack;
+    private JButton bAddUnit;
+    private JButton bDeleteUnit;
 
-    private JComboBox unitsBox;
-    private JButton bAdd;
-    private JButton bDelete;
-    private JButton bDone;
-
+    private UnitList units;
     private Unit selectedUnit;
 
-    public ViewListGUI() {
+    public UnitGUI() {
 
-        checkBoxes = new ArrayList<JCheckBox>();
+        //units = new UnitList();
+
+//        try {
+//            FileOutputStream saveFile = new FileOutputStream("units.dat");
+//            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+//            save.writeObject(units);
+//            save.close();
+//
+//        } catch (FileNotFoundException ex) {
+//            ex.printStackTrace();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+    	
+    	try {
+    		FileInputStream saveFile = new FileInputStream("units.dat");
+            ObjectInputStream save = new ObjectInputStream(saveFile);
+            this.units = (UnitList) save.readObject();
+            save.close();
+    		}
+        	catch (FileNotFoundException ex) {
+            
+        		units = new UnitList();
+                try {
+                    dispose();
+                	
+                	FileOutputStream saveFile = new FileOutputStream("units.dat");
+                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
+                    save.writeObject(units);
+                    save.close();
+                }
+                catch (FileNotFoundException ex2) {
+                    ex.printStackTrace();
+                }
+                catch (IOException ex2) {
+                    ex.printStackTrace();
+                }
+                //dispose();
+                //JFrame back = new MainGUI();
+                //back.pack();
+                //back.setVisible(true);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        contentPane = (JPanel)this.getContentPane();
+        this.setTitle("Choose Unit to create a Student class");
+
+        detailsPane = new JPanel();
+        detailsPane.setLayout(new GridLayout(1,2));
+        //lYear = new JLabel("Year:");
+        //detailsPane.add(lYear);
+        //tfYear = new JTextField();
+        //detailsPane.add(tfYear);
+        lUnit = new JLabel("Unit:");
+        detailsPane.add(lUnit);
+        jComboBox = new JComboBox();
+        for (Unit uni: units.getUnits()){
+            jComboBox.addItem(uni.getUnitName());
+        }
+        detailsPane.add(jComboBox);
+        jComboBox.setSelectedIndex(-1);
+        
+        buttonPane = new JPanel();
+        buttonPane.setLayout(new FlowLayout());
+        bConfirm = new JButton("Confirm");
+        bConfirm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	//bConfirm_actionPerformed(e);
+            	try {   
+            	     bConfirm_actionPerformed(e);
+            	}
+            	catch (NullPointerException wi){
+            		JOptionPane.showMessageDialog(null, "You need to select the specific unit", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            	}
+            }
+        });
+        buttonPane.add(bConfirm);
+        
+        bBack = new JButton("Back");
+        bBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	dispose();
+            	MainGUI mg = new MainGUI();
+            	mg.setLocationRelativeTo(null);
+            	mg.pack();
+            	mg.setVisible(true);	
+            }
+        });
+        buttonPane.add(bBack);
+        
+        bAddUnit = new JButton("Add New Unit");
+        bAddUnit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                JFrame addFrame = new AddUnitGui();
+                addFrame.pack();
+                addFrame.setLocationRelativeTo(null);
+                addFrame.setVisible(true);
+
+            }
+        });
+        buttonPane.add(bAddUnit);
+        
+        bDeleteUnit = new JButton("Delete Unit");
+        bDeleteUnit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String unitNameDelete = JOptionPane.showInputDialog("Enter the name of the Unit you want to delete: ");
+                for (Unit u: units.getUnits()){
+                    if (u.getUnitName().equals(unitNameDelete))
+                        units.deleteUnit(u);
+                }
+                try {
+                    FileOutputStream saveFile = new FileOutputStream("units.dat");
+                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
+                    save.writeObject(units);
+                    save.close();
+
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        contentPane.add(detailsPane, BorderLayout.CENTER);
+        contentPane.add(buttonPane, BorderLayout.SOUTH);
 
         try {
-            FileInputStream saveFile = new FileInputStream("units.dat");
-            ObjectInputStream save = new ObjectInputStream(saveFile);
-            this.unitList = (UnitList) save.readObject();
+            FileOutputStream saveFile = new FileOutputStream("units.dat");
+            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+            save.writeObject(units);
             save.close();
 
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
         }
 
-        contentPane = (JPanel) this.getContentPane();
-        //contentPane.setPreferredSize(new Dimension(400, 200));
-        tablePane = new JPanel();
-        this.setTitle("Look at the created Student Classes");
 
-        infoPanel = new JPanel();
-        infoPanel.setLayout(new FlowLayout());
-        unitsBox = new JComboBox();
-        for (Unit u : unitList.getUnits()) {
-            unitsBox.addItem(u.getUnitName());
-        }
-        //infoPanel.add(unitsBox);
-        unitsBox.setSelectedIndex(-1);
-        unitsBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                click_actionPerformed(e);
-            }
-        });
-
-        buttonPane = new JPanel();
-        buttonPane.setLayout(new FlowLayout());
-        bAdd = new JButton("Add Students");
-        bAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                JPanel inputDialog = new JPanel();
-                JPanel info = new JPanel();
-                JPanel buttons = new JPanel();
-                JLabel lName = new JLabel("Name");
-                JTextField tName = new JTextField();
-                JLabel lTel = new JLabel("Telephone Number");
-                JTextField tTel = new JTextField();
-                JLabel lEmail = new JLabel("Email");
-                JTextField tEmail = new JTextField();
-                info.setLayout(new GridLayout(3, 3));
-                info.add(lName);
-                info.add(tName);
-                info.add(lTel);
-                info.add(tTel);
-                info.add(lEmail);
-                info.add(tEmail);
-                inputDialog.add(info, BorderLayout.CENTER);
-
-                int result = JOptionPane.showConfirmDialog(null, inputDialog,
-                        "Please Enter New Students Info", JOptionPane.OK_CANCEL_OPTION);
-                if (result == JOptionPane.OK_OPTION) {
-                    try{
-                    	studentList.addStudent(new Student(tName.getText(), Integer.parseInt(tTel.getText()), tEmail.getText()));
-                    }
-                    catch(Exception ex){
-                    	JOptionPane.showMessageDialog(null,"Specify student name and email with letters and telephone with numbers."+ "\n" + "Try again by adding students button", "ATTENTION !!!", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-                try {
-                    FileOutputStream saveFile = new FileOutputStream("saveFile_" + unitsBox.getSelectedItem().toString() + ".dat");
-                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
-                    save.writeObject(studentList);
-                    save.close();
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-                tablePane.removeAll();
-
-                try {
-                    FileInputStream saveFile = new FileInputStream("saveFile_" + unitsBox.getSelectedItem().toString() + ".dat");
-                    ObjectInputStream save = new ObjectInputStream(saveFile);
-                    studentList = (StudentList) save.readObject();
-                    save.close();
-
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-
-                tablePane.setLayout(new GridLayout(studentList.getNameList().size()+1, 4));
-                tablePane.add(new JLabel("ID"));
-                tablePane.add(new JLabel("Name"));
-                tablePane.add(new JLabel("Absences"));
-                tablePane.add(new JLabel("Ansences Permitted"));
-
-                checkBoxes.clear();
-                int i = 0;
-                for (Student s : studentList.getArrayOfStudents()) {
-                    checkBoxes.add(new JCheckBox(String.valueOf(s.getId()), false));
-                    tablePane.add(checkBoxes.get(i));
-                    tablePane.add(new JLabel(s.getName()));
-                    tablePane.add(new JLabel(String.valueOf(s.checkAbsenceLimit(studentList.getUnit().getUnitName()))));
-                    tablePane.add(new JLabel(String.valueOf(studentList.getUnit().getAbsencesPermitted())));
-
-                    i++;
-                }
-                buttonPane.add(bAdd);
-                buttonPane.add(bDelete);
-
-                buttonPane.repaint();
-                contentPane.add(tablePane, BorderLayout.CENTER);
-                tablePane.revalidate();
-                tablePane.repaint();
-
-
-            }
-        });
-
-
-        bDelete = new JButton("Delete Students");
-        bDelete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Student s;
-                for (JCheckBox jch : checkBoxes) {
-                    if (jch.isSelected()) {
-
-                        s = studentList.getStudentById(Integer.parseInt(jch.getText()));
-                        studentList.deleteStudent(s);
-
-                    }
-                }
-
-                try {
-                    FileOutputStream saveFile = new FileOutputStream("saveFile_" + unitsBox.getSelectedItem().toString() + ".dat");
-                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
-                    save.writeObject(studentList);
-                    save.close();
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-                tablePane.removeAll();
-
-                try {
-                    FileInputStream saveFile = new FileInputStream("saveFile_" + unitsBox.getSelectedItem().toString() + ".dat");
-                    ObjectInputStream save = new ObjectInputStream(saveFile);
-                    studentList = (StudentList) save.readObject();
-                    save.close();
-
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-
-                tablePane.setLayout(new GridLayout(studentList.getNameList().size()+1, 4));
-                tablePane.add(new JLabel("ID"));
-                tablePane.add(new JLabel("Name"));
-                tablePane.add(new JLabel("Absences"));
-                tablePane.add(new JLabel("Ansences Permitted"));
-                int i = 0;
-                checkBoxes.clear();
-                for (Student si : studentList.getArrayOfStudents()) {
-                    checkBoxes.add(new JCheckBox(String.valueOf(si.getId()), false));
-                    tablePane.add(checkBoxes.get(i));
-                    tablePane.add(new JLabel(si.getName()));
-                    tablePane.add(new JLabel(String.valueOf(si.checkAbsenceLimit(studentList.getUnit().getUnitName()))));
-                    tablePane.add(new JLabel(String.valueOf(studentList.getUnit().getAbsencesPermitted())));
-
-                    i++;
-                }
-                buttonPane.add(bAdd);
-                buttonPane.add(bDelete);
-
-                buttonPane.repaint();
-                contentPane.add(tablePane, BorderLayout.CENTER);
-                tablePane.revalidate();
-                tablePane.repaint();
-            }
-        });
-
-
-        infoPanel.add(unitsBox);
-        bDone = new JButton("Done");
-        bDone.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                MainGUI mg = new MainGUI();
-                mg.setLocationRelativeTo(null);
-                mg.pack();
-                mg.setVisible(true);
-            }
-        });
-        buttonPane.add(bDone);
-
-        contentPane.add(buttonPane, BorderLayout.SOUTH);
-        contentPane.add(infoPanel, BorderLayout.NORTH);
     }
 
-    private void click_actionPerformed(ActionEvent e) {
-
-        tablePane.removeAll();
-
-        try {
-            FileInputStream saveFile = new FileInputStream("saveFile_" + this.unitsBox.getSelectedItem().toString() + ".dat");
-            ObjectInputStream save = new ObjectInputStream(saveFile);
-            this.studentList = (StudentList) save.readObject();
-            save.close();
-
-        tablePane.setLayout(new GridLayout(studentList.getNameList().size()+1, 4));
-        tablePane.add(new JLabel("ID"));
-        tablePane.add(new JLabel("Name"));
-        tablePane.add(new JLabel("Absences"));
-        tablePane.add(new JLabel("Ansences Permitted"));
-        int i = 0;
-        for (Student s : studentList.getArrayOfStudents()) {
-            checkBoxes.add(new JCheckBox(String.valueOf(s.getId()), false));
-            tablePane.add(checkBoxes.get(i));
-            tablePane.add(new JLabel(s.getName()));
-            tablePane.add(new JLabel(String.valueOf(s.checkAbsenceLimit(studentList.getUnit().getUnitName()))));
-            tablePane.add(new JLabel(String.valueOf(studentList.getUnit().getAbsencesPermitted())));
-
-            i++;
-        }
-        catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "The unit that you chose does not have created student class."+"\n " + "Try another unit or add students here.", "ATTENTION !!!", JOptionPane.ERROR_MESSAGE);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
+    private void bConfirm_actionPerformed(ActionEvent e) {
+//        StudentList studentList = new StudentList(Integer.parseInt(this.tfYear.getText()));
+//        try{
+//            FileOutputStream saveFile = new FileOutputStream("saveFile_" + this.jComboBox.getSelectedItem().toString() + ".dat");
+//            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+//            save.writeObject(studentList);
+//            save.close();
+//        }
+//        catch (FileNotFoundException ex){
+//            ex.printStackTrace();
+//        }
+//        catch (IOException ex){
+//            ex.printStackTrace();
+//        }
+        //StudentList list = new StudentList(Integer.parseInt(this.tfYear.getText()));
+    	for (Unit u: units.getUnits()){
+    		if (u.getUnitName().equals(jComboBox.getSelectedItem().toString()))
+    			selectedUnit = u;
+    	}
+            
         
-        buttonPane.add(bAdd);
-        buttonPane.add(bDelete);
-
-        buttonPane.repaint();
-        contentPane.add(tablePane, BorderLayout.CENTER);
-        tablePane.revalidate();
-        tablePane.repaint();
+    	JFrame studentFrame = new StudentGUI(selectedUnit);
+        studentFrame.pack();
+        studentFrame.setVisible(true);
+        studentFrame.setLocationRelativeTo(null);
+        dispose();
+        //studentFrame.setLocationRelativeTo(null);
+        
     }
-
 }
