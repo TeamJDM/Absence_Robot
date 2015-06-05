@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 public class StudentGUI extends JFrame{
 
-	private JFrame thisFrame;
+    private JFrame thisFrame;
     private JPanel contentPane;
     private JPanel detailsPane;
     private JPanel buttonPane;
@@ -79,22 +79,30 @@ public class StudentGUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                	tName.getText();
-                	tTel.getText();
-                	tEmail.getText();
-                	bAdd_actionPerformed(e);
+                	if(tName.getText() != null && !tName.getText().isEmpty()){
+                		if(tEmail.getText() != null && !tEmail.getText().isEmpty()){	
+                			tTel.getText();
+                			bAdd_actionPerformed(e);
+                		}
+                		else{
+                			JOptionPane.showMessageDialog(null, "Please provide studnet email", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+                		}
+                	}
+                	else{
+                		JOptionPane.showMessageDialog(null, "Please provide student name", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+                	}
                 }
                 catch (NumberFormatException wi) {
-            		JOptionPane.showMessageDialog(null, "You need to specify tel with numbers", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            		JOptionPane.showMessageDialog(null, "You need to specify telephone as an integer ", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
             	}
-                catch(Exception ex){
-                	JOptionPane.showMessageDialog(null, "You need to specify the name, tel and email of new student", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
-                }
+                catch (NullPointerException wi){
+            		JOptionPane.showMessageDialog(null, "You need to select telephone number", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+            	}
             }
         });
         buttonPane.add(bAdd);
         
-        bFinish = new JButton("Save List & Finish");
+        bFinish = new JButton("Save All Added Students & Finish");
         bFinish.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
