@@ -50,16 +50,25 @@ public class AddUnitGui extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-            	units.addUnit(new Unit(tUnitName.getText(), tProfName.getText(),Integer.parseInt(tAbsences.getText())));
-                tUnitName.setText("");
-                tProfName.setText("");
-                tAbsences.setText("");
+            	//units.addUnit(new Unit(tUnitName.getText(), tProfName.getText(),Integer.parseInt(tAbsences.getText())));
+                	if(tUnitName.getText() != null && !tUnitName.getText().isEmpty()){
+                		if(tProfName.getText() != null && !tProfName.getText().isEmpty()){	
+                			tAbsences.getText();
+                			bAdd_actionPerformed(e);
+                		}
+                		else{
+                			JOptionPane.showMessageDialog(null, "Please provide professor name", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+                		}
+                	}
+                	else{
+                		JOptionPane.showMessageDialog(null, "Please provide unit name", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+                	}
                 }
-                catch (IllegalArgumentException wi) {
-            		JOptionPane.showMessageDialog(null, "You need to specify Absences with numbers and unit and professor's name as a string", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+                catch (NumberFormatException wi) {
+            		JOptionPane.showMessageDialog(null, "You need to specify Absences as an integer", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
             	}
-            	catch (Exception wi2){
-            		JOptionPane.showMessageDialog(null, "You need to fill out all columns ", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
+                catch (NullPointerException wi){
+            		JOptionPane.showMessageDialog(null, "You need to select absences permited", "WRONG !!!", JOptionPane.ERROR_MESSAGE);
             	}
                 
                 try {
@@ -104,6 +113,13 @@ public class AddUnitGui extends JFrame{
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
+    }
+    public void bAdd_actionPerformed(ActionEvent e) {
+    	
+    	units.addUnit(new Unit(tUnitName.getText(), tProfName.getText(),Integer.parseInt(tAbsences.getText())));
+        tUnitName.setText("");
+        tProfName.setText("");
+        tAbsences.setText("");
     }
 }
 
